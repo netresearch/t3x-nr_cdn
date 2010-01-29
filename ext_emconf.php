@@ -1,0 +1,47 @@
+<?php
+
+########################################################################
+# Extension Manager/Repository config file for ext: "nr_t3_application"
+#
+# Auto generated 15-12-2009 14:16
+#
+# Manual updates:
+# Only the data in the array - anything else is removed by next write.
+# "version" and "dependencies" must not be touched!
+########################################################################
+
+$EM_CONF[$_EXTKEY] = array(
+	'title' => 'NR CDN',
+	'description' => 'Images and Medias to Content Delivery Network',
+	'category' => 'fe',
+	'author' => 'Alexander Opitz',
+	'author_company' => 'Netresearch GmbH & Co.KG',
+	'author_email' => 'alexander.opitz@netresearch.de',
+	'shy' => '',
+	'dependencies' => 'typo3',
+	'constraints' => array(
+		'depends' => array(
+			'typo3' => '4.2.1',
+		),
+		'conflicts' => array(
+		),
+		'suggests' => array(
+		),
+	),
+	'conflicts' => '',
+	'priority' => '',
+	'module' => '',
+	'state' => 'experimental',
+	'internal' => '',
+	'uploadfolder' => 0,
+	'createDirs' => '',
+	'modify_tables' => '',
+	'clearCacheOnLoad' => 0,
+	'lockType' => '',
+	'version' => '0.9.0',
+	'_md5_values_when_last_written' => 'a:154:{s:9:"Changelog";s:4:"9d30";s:14:"config.inc.php";s:4:"386a";s:12:"ext_icon.gif";s:4:"a459";s:17:"ext_localconf.php";s:4:"18c5";s:14:"ext_tables.php";s:4:"2ad0";s:20:"src/T3/Exception.php";s:4:"5573";s:17:"src/T3/Logger.php";s:4:"d277";s:20:"src/T3/NR_Helper.php";s:4:"a9cd";s:20:"src/T3/Templater.php";s:4:"8374";s:17:"src/T3/Texter.php";s:4:"1358";s:27:"src/T3/Interface/Logger.php";s:4:"aa3a";s:30:"src/T3/Interface/Templater.php";s:4:"12e4";s:27:"src/T3/Interface/Texter.php";s:4:"e99f";s:27:"src/T3/Bindings/pi_main.php";s:4:"5f0d";s:26:"src/T3/Bindings/pibase.php";s:4:"250e";s:27:"src/T3/Texter/LocalLang.php";s:4:"e34e";s:22:"src/T3/Texter/Null.php";s:4:"ea6a";s:32:"src/T3/Exception/Application.php";s:4:"8658";s:27:"src/T3/Exception/Screen.php";s:4:"278f";s:22:"src/T3/Object/Base.php";s:4:"aac3";s:23:"src/T3/Object/Error.php";s:4:"4d55";s:23:"src/T3/Object/Pager.php";s:4:"89c2";s:22:"src/T3/Object/Soap.php";s:4:"21ae";s:21:"src/T3/Object/Sql.php";s:4:"8a7d";s:23:"src/T3/Object/Timer.php";s:4:"9125";s:23:"src/T3/Object/Typo3.php";s:4:"53fc";s:26:"src/T3/Object/Typo3Map.php";s:4:"a3bb";s:22:"src/T3/Object/User.php";s:4:"123a";s:33:"src/T3/Controller/Application.php";s:4:"6abf";s:26:"src/T3/Controller/Base.php";s:4:"7046";s:31:"src/T3/Controller/Container.php";s:4:"430f";s:30:"src/T3/Controller/DamImage.php";s:4:"07c9";s:32:"src/T3/Controller/DataLoader.php";s:4:"0fe5";s:28:"src/T3/Controller/Images.php";s:4:"5e2a";s:29:"src/T3/Controller/Request.php";s:4:"e7dd";s:28:"src/T3/Controller/Screen.php";s:4:"f861";s:26:"src/T3/Controller/View.php";s:4:"08c3";s:40:"src/T3/Controller/View/AjaxFunctions.php";s:4:"4a29";s:32:"src/T3/Controller/View/Error.php";s:4:"33e4";s:38:"src/T3/Controller/View/JSFunctions.php";s:4:"b004";s:33:"src/T3/Controller/View/T3Page.php";s:4:"6b83";s:34:"src/T3/Controller/Screen/Empty.php";s:4:"1f8b";s:34:"src/T3/Controller/Screen/Error.php";s:4:"d8a4";s:20:"src/T3/List/Base.php";s:4:"c2bf";s:20:"src/T3/List/Soap.php";s:4:"375b";s:19:"src/T3/List/Sql.php";s:4:"bd24";s:21:"src/T3/List/Timer.php";s:4:"52e7";s:21:"src/T3/List/Typo3.php";s:4:"be15";s:27:"src/T3/Templater/Smarty.php";s:4:"a5f9";s:29:"src/T3/Templater/Template.php";s:4:"0de7";s:32:"src/T3/Logger/ThrowException.php";s:4:"e0b6";s:23:"classes/T3_BaseList.php";s:4:"d072";s:25:"classes/T3_BaseObject.php";s:4:"67f8";s:27:"classes/T3_BaseSOAPList.php";s:4:"b6d3";s:29:"classes/T3_BaseSOAPObject.php";s:4:"66f0";s:37:"classes/T3_BaseSOAPTypo3MapObject.php";s:4:"c068";s:28:"classes/T3_BaseTypo3List.php";s:4:"8413";s:30:"classes/T3_BaseTypo3Object.php";s:4:"8486";s:26:"classes/T3_ErrorObject.php";s:4:"a971";s:24:"classes/T3_TimerList.php";s:4:"f58a";s:26:"classes/T3_TimerObject.php";s:4:"a1cc";s:45:"data/templates/default/View/AjaxFunctions.tpl";s:4:"3c05";s:37:"data/templates/default/View/Error.tpl";s:4:"a197";s:43:"data/templates/default/View/JSFunctions.tpl";s:4:"d41d";s:38:"data/templates/default/View/T3Page.tpl";s:4:"899a";s:39:"data/templates/default/Screen/Error.tpl";s:4:"a5d4";s:16:"lib/Template.php";s:4:"30c4";s:32:"lib/class.tx_xajaxIntegrator.php";s:4:"a2fe";s:32:"lib/smarty/Config_File.class.php";s:4:"607d";s:27:"lib/smarty/Smarty.class.php";s:4:"d088";s:36:"lib/smarty/Smarty_Compiler.class.php";s:4:"0988";s:20:"lib/smarty/debug.tpl";s:4:"def6";s:39:"lib/smarty/plugins/block.textformat.php";s:4:"f4e1";s:38:"lib/smarty/plugins/compiler.assign.php";s:4:"b4f1";s:49:"lib/smarty/plugins/function.assign_debug_info.php";s:4:"0abd";s:43:"lib/smarty/plugins/function.config_load.php";s:4:"fa64";s:39:"lib/smarty/plugins/function.counter.php";s:4:"9531";s:37:"lib/smarty/plugins/function.cycle.php";s:4:"db7b";s:37:"lib/smarty/plugins/function.debug.php";s:4:"4963";s:36:"lib/smarty/plugins/function.eval.php";s:4:"3fed";s:37:"lib/smarty/plugins/function.fetch.php";s:4:"5125";s:47:"lib/smarty/plugins/function.html_checkboxes.php";s:4:"a054";s:42:"lib/smarty/plugins/function.html_image.php";s:4:"de11";s:44:"lib/smarty/plugins/function.html_options.php";s:4:"b634";s:43:"lib/smarty/plugins/function.html_radios.php";s:4:"6a00";s:48:"lib/smarty/plugins/function.html_select_date.php";s:4:"ad1d";s:48:"lib/smarty/plugins/function.html_select_time.php";s:4:"ac7c";s:42:"lib/smarty/plugins/function.html_table.php";s:4:"d7ad";s:38:"lib/smarty/plugins/function.mailto.php";s:4:"03b5";s:36:"lib/smarty/plugins/function.math.php";s:4:"0b33";s:37:"lib/smarty/plugins/function.popup.php";s:4:"1e8b";s:42:"lib/smarty/plugins/function.popup_init.php";s:4:"b235";s:42:"lib/smarty/plugins/modifier.capitalize.php";s:4:"70f5";s:35:"lib/smarty/plugins/modifier.cat.php";s:4:"9dbc";s:48:"lib/smarty/plugins/modifier.count_characters.php";s:4:"9169";s:48:"lib/smarty/plugins/modifier.count_paragraphs.php";s:4:"c64e";s:47:"lib/smarty/plugins/modifier.count_sentences.php";s:4:"c22e";s:43:"lib/smarty/plugins/modifier.count_words.php";s:4:"0734";s:43:"lib/smarty/plugins/modifier.date_format.php";s:4:"5d57";s:47:"lib/smarty/plugins/modifier.debug_print_var.php";s:4:"0839";s:39:"lib/smarty/plugins/modifier.default.php";s:4:"11c1";s:38:"lib/smarty/plugins/modifier.escape.php";s:4:"3bd0";s:38:"lib/smarty/plugins/modifier.indent.php";s:4:"ea1f";s:37:"lib/smarty/plugins/modifier.lower.php";s:4:"5520";s:37:"lib/smarty/plugins/modifier.nl2br.php";s:4:"1d16";s:45:"lib/smarty/plugins/modifier.regex_replace.php";s:4:"f3ae";s:39:"lib/smarty/plugins/modifier.replace.php";s:4:"b7d1";s:39:"lib/smarty/plugins/modifier.spacify.php";s:4:"6699";s:45:"lib/smarty/plugins/modifier.string_format.php";s:4:"4010";s:37:"lib/smarty/plugins/modifier.strip.php";s:4:"b128";s:42:"lib/smarty/plugins/modifier.strip_tags.php";s:4:"4811";s:40:"lib/smarty/plugins/modifier.truncate.php";s:4:"da35";s:37:"lib/smarty/plugins/modifier.upper.php";s:4:"0ef0";s:40:"lib/smarty/plugins/modifier.wordwrap.php";s:4:"b80b";s:50:"lib/smarty/plugins/outputfilter.trimwhitespace.php";s:4:"ac1d";s:50:"lib/smarty/plugins/shared.escape_special_chars.php";s:4:"2f72";s:44:"lib/smarty/plugins/shared.make_timestamp.php";s:4:"29ff";s:54:"lib/smarty/internals/core.assemble_plugin_filepath.php";s:4:"c988";s:53:"lib/smarty/internals/core.assign_smarty_interface.php";s:4:"4c2d";s:50:"lib/smarty/internals/core.create_dir_structure.php";s:4:"a12f";s:51:"lib/smarty/internals/core.display_debug_console.php";s:4:"297b";s:46:"lib/smarty/internals/core.get_include_path.php";s:4:"ba78";s:43:"lib/smarty/internals/core.get_microtime.php";s:4:"72eb";s:46:"lib/smarty/internals/core.get_php_resource.php";s:4:"e0fc";s:39:"lib/smarty/internals/core.is_secure.php";s:4:"7ea8";s:40:"lib/smarty/internals/core.is_trusted.php";s:4:"83e2";s:42:"lib/smarty/internals/core.load_plugins.php";s:4:"d600";s:50:"lib/smarty/internals/core.load_resource_plugin.php";s:4:"08d5";s:52:"lib/smarty/internals/core.process_cached_inserts.php";s:4:"2a84";s:54:"lib/smarty/internals/core.process_compiled_include.php";s:4:"95e1";s:45:"lib/smarty/internals/core.read_cache_file.php";s:4:"e7de";s:37:"lib/smarty/internals/core.rm_auto.php";s:4:"8834";s:35:"lib/smarty/internals/core.rmdir.php";s:4:"0820";s:48:"lib/smarty/internals/core.run_insert_handler.php";s:4:"f645";s:48:"lib/smarty/internals/core.smarty_include_php.php";s:4:"0d87";s:46:"lib/smarty/internals/core.write_cache_file.php";s:4:"a000";s:52:"lib/smarty/internals/core.write_compiled_include.php";s:4:"ff79";s:53:"lib/smarty/internals/core.write_compiled_resource.php";s:4:"caa7";s:40:"lib/smarty/internals/core.write_file.php";s:4:"23f9";s:13:"doc/debugging";s:4:"fbf3";s:39:"controller/T3_ApplicationController.php";s:4:"0a8d";s:32:"controller/T3_BaseController.php";s:4:"2408";s:28:"controller/T3_DataLoader.php";s:4:"56c6";s:37:"controller/T3_ErrorViewController.php";s:4:"1f2d";s:27:"controller/T3_NR_Helper.php";s:4:"980f";s:33:"controller/T3_ObjectContainer.php";s:4:"d75f";s:35:"controller/T3_RequestController.php";s:4:"bf42";s:34:"controller/T3_ScreenController.php";s:4:"5b80";s:38:"controller/T3_T3PageViewController.php";s:4:"5dae";s:32:"controller/T3_ViewController.php";s:4:"b414";s:30:"controller/nr_tslib_pibase.php";s:4:"912f";s:22:"controller/pi_main.php";s:4:"f063";s:33:"templates/default/ErrorScreen.tpl";s:4:"5d92";s:34:"templates/default/T3_ErrorView.tpl";s:4:"736d";}',
+	'suggests' => array(
+	),
+);
+
+?>
