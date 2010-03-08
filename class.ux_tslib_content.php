@@ -31,6 +31,43 @@ class ux_tslib_cObj extends tslib_cObj
 		return $content;
 	}
 
+
+	/**
+	 * Rendering the cObject, USER and USER_INT
+	 *
+	 * @param	array		Array of TypoScript properties
+	 * @param	string		If "INT" then the cObject is a "USER_INT" (non-cached), otherwise just "USER" (cached)
+	 * @return	string		Output
+	 * @link http://typo3.org/doc.0.html?&tx_extrepmgm_pi1[extUid]=270&tx_extrepmgm_pi1[tocEl]=369&cHash=b623aca0a9
+	 */
+	function USER($conf,$ext='')	{
+		$content='';
+		switch($ext)	{
+			case 'INT':
+				$substKey = $ext.'_SCRIPT.'.$GLOBALS['TSFE']->uniqueHash();
+				$content.='<!--'.$substKey.'-->';
+				$GLOBALS['TSFE']->config[$ext.'incScript'][$substKey] = array(
+					'file' => $conf['includeLibs'],
+					'conf' => $conf,
+					'cObj' => serialize($this),
+					'type' => 'FUNC'
+				);
+			break;
+			default:
+				$content.=$this->callUserFunction($conf['userFunc'],$conf,'');
+			break;
+		}
+        $arConfig = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
+        if (is_array($arConfig) && isset($arConfig['URL'])) {
+            $content = str_replace(
+                '"fileadmin/',
+                '"' . $arConfig['URL'] . '/fileadmin/',
+                $content
+            );
+        }
+		return $content;
+	}
+
 	/**
 	 * Rendering the cObject, MULTIMEDIA
 	 *
@@ -52,7 +89,7 @@ class ux_tslib_cObj extends tslib_cObj
 				$parArray=array();
 					// src is added
                 if (is_array($arConfig) && isset($arConfig['URL'])) {
-                    $parArray['src']='src="' . $arConfig['URL'] . $incFile.'"';
+                    $parArray['src']='src="' . $arConfig['URL'] . '/' . $incFile.'"';
                 } else {
                     $parArray['src']='src="'.$GLOBALS['TSFE']->absRefPrefix.$incFile.'"';
                 }
@@ -124,7 +161,7 @@ class ux_tslib_cObj extends tslib_cObj
 			}
 			$altParam = $this->getAltParam($conf);
              if (is_array($arConfig) && isset($arConfig['URL'])) {
-                $theValue = '<img src="'.htmlspecialchars($arConfig['URL'] . t3lib_div::rawUrlEncodeFP($info[3])).'" width="'.$info[0].'" height="'.$info[1].'"'.$this->getBorderAttr(' border="'.intval($conf['border']).'"').(($conf['params'] || is_array($conf['params.']))?' '.$this->stdwrap($conf['params'],$conf['params.']):'').($altParam).' />';
+                $theValue = '<img src="'.htmlspecialchars($arConfig['URL'] . '/' . t3lib_div::rawUrlEncodeFP($info[3])).'" width="'.$info[0].'" height="'.$info[1].'"'.$this->getBorderAttr(' border="'.intval($conf['border']).'"').(($conf['params'] || is_array($conf['params.']))?' '.$this->stdwrap($conf['params'],$conf['params.']):'').($altParam).' />';
             } else {
                 $theValue = '<img src="'.htmlspecialchars($GLOBALS['TSFE']->absRefPrefix.t3lib_div::rawUrlEncodeFP($info[3])).'" width="'.$info[0].'" height="'.$info[1].'"'.$this->getBorderAttr(' border="'.intval($conf['border']).'"').(($conf['params'] || is_array($conf['params.']))?' '.$this->stdwrap($conf['params'],$conf['params.']):'').($altParam).' />';
             }
