@@ -160,7 +160,9 @@ class ux_tslib_cObj extends tslib_cObj
 				$conf['altText.'] = $conf['alttext.'];
 			}
 			$altParam = $this->getAltParam($conf);
-             if (is_array($arConfig) && isset($arConfig['URL'])) {
+            if (is_array($arConfig) && isset($arConfig['URL'])
+                && strncmp('fileadmin/', $info[3], 10) === 0
+            ) {
                 $theValue = '<img src="'.htmlspecialchars($arConfig['URL'] . '/' . t3lib_div::rawUrlEncodeFP($info[3])).'" width="'.$info[0].'" height="'.$info[1].'"'.$this->getBorderAttr(' border="'.intval($conf['border']).'"').(($conf['params'] || is_array($conf['params.']))?' '.$this->stdwrap($conf['params'],$conf['params.']):'').($altParam).' />';
             } else {
                 $theValue = '<img src="'.htmlspecialchars($GLOBALS['TSFE']->absRefPrefix.t3lib_div::rawUrlEncodeFP($info[3])).'" width="'.$info[0].'" height="'.$info[1].'"'.$this->getBorderAttr(' border="'.intval($conf['border']).'"').(($conf['params'] || is_array($conf['params.']))?' '.$this->stdwrap($conf['params'],$conf['params.']):'').($altParam).' />';
