@@ -1,3 +1,7 @@
+2010-04-21 Alexander Opitz <alexander.opitz@netresearch.de>
+ * and_shadowbox and wec_discussion needs the deprecated way. (SDM-3483)
+ * Version 0.9.3
+
 2010-03-29 Alexander Opitz <alexander.opitz@netresearch.de>
  * Fix problem with auto images in typo3temp (SDM-2160)
  * Version 0.9.2
