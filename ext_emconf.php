@@ -38,7 +38,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'version' => '0.9.2',
+	'version' => '0.9.3',
 	'_md5_values_when_last_written' => 'a:6:{s:9:"Changelog";s:4:"713a";s:10:"README.txt";s:4:"4ae8";s:26:"class.ux_tslib_content.php";s:4:"38f2";s:21:"class.ux_tslib_fe.php";s:4:"00e1";s:12:"ext_icon.gif";s:4:"a459";s:17:"ext_localconf.php";s:4:"f22f";}',
 	'suggests' => array(
 	),
