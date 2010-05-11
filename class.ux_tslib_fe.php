@@ -4,21 +4,20 @@ require_once 'typo3conf/ext/aida_dre_countryxs/class.ux_tslib_fe.php';
 
 class ux_ux_tslib_fe extends ux_tslib_fe
 {
-
 	/**
 	 * Processes the INTinclude-scripts
 	 *
 	 * @return	void
 	 */
 	function INTincScript()	{
-/*			// Deprecated stuff:
+			// Deprecated stuff:
 		$this->additionalHeaderData = is_array($this->config['INTincScript_ext']['additionalHeaderData']) ? $this->config['INTincScript_ext']['additionalHeaderData'] : array();
 		$this->additionalJavaScript = $this->config['INTincScript_ext']['additionalJavaScript'];
 		$this->additionalCSS = $this->config['INTincScript_ext']['additionalCSS'];
 		$this->JSCode = $this->additionalHeaderData['JSCode'];
 		$this->JSImgCode = $this->additionalHeaderData['JSImgCode'];
 		$this->divSection='';
-*/
+
 		do {
 			$INTiS_config = $this->config['INTincScript'];
 			$this->INTincScript_includeLibs($INTiS_config);
