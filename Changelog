@@ -1,8 +1,4 @@
 2010-04-21 Alexander Opitz <alexander.opitz@netresearch.de>
- * SDM-5771 cssstyledcontent connector
- * Version 0.9.4
-
-2010-04-21 Alexander Opitz <alexander.opitz@netresearch.de>
  * and_shadowbox and wec_discussion needs the deprecated way. (SDM-3483)
  * Version 0.9.3
 

@@ -49,36 +49,6 @@ class ux_ux_tslib_fe extends ux_tslib_fe
             }
         }
     }
-
-	/**
-	 * return url from file
-	 *
-	 * @param	string		$url: file url
-	 * @param	array		$conf typoscript configuration
-     *
-	 * @return	string		url
-	 */
-	function getFileUrl($url, $conf)
-    {
-        $arConfig = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
-        if (is_array($arConfig) && isset($arConfig['URL'])) {
-            $url = str_replace(
-                '"fileadmin/',
-                '"' . $arConfig['URL'] . '/fileadmin/',
-                $url
-            );
-        }
-        var_dump($url);die();
-        $output = '';
-        $initP = '?id='.$GLOBALS['TSFE']->id.'&type='.$GLOBALS['TSFE']->type;
-        if (@is_file($url))	{
-            $urlEnc = str_replace('%2F', '/', rawurlencode($url));
-            $locDataAdd = $conf['jumpurl.']['secure'] ? $this->cObj->locDataJU($urlEnc,$conf['jumpurl.']['secure.']) : '';
-            $retUrl = ($conf['jumpurl']) ? $GLOBALS['TSFE']->config['mainScript'].$initP.'&jumpurl='.rawurlencode($urlEnc).$locDataAdd.$GLOBALS['TSFE']->getMethodUrlIdToken : $urlEnc;		// && $GLOBALS['TSFE']->config['config']['jumpurl_enable']
-            return htmlspecialchars($GLOBALS['TSFE']->absRefPrefix.$retUrl);
-        };
-        return '';
-    }
 }
 
 
