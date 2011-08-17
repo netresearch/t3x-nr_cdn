@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="nr_cdn" default="build" basedir=".">
+ <!-- phing build file -->
+
+ <target name="build" description="Run a build on the CI server"
+         depends="phpunit,pdepend,phpcpd,phpcs,phploc,phpmd,docblox"
+         />
+
+
+ <target name="phpunit" description="run tests and generate log file">
+  <exec dir="tests" checkreturn="true" passthru="true"
+        command="phpunit --log-junit logs/junit.xml --coverage-clover logs/clover.xml --testdox-html logs/dox.html --coverage-html doc/coverage ."
+        />
+ </target>
+
+
+ <target name="docblox" description="generate api docs" depends="prepare">
+  <exec checkreturn="false" passthru="true"
+        command="docblox --directory ${project.basedir}/src --target ${project.basedir}/tests/doc/api --title='${phing.project.name}'"
+        />
+ </target>
+
+
+ <target name="pdepend" description="analyse code dependencies">
+  <exec dir="${project.basedir}" checkreturn="false" passthru="true"
+        command="pdepend --jdepend-xml=tests/logs/jdepend.xml ${project.basedir}"
+        />
+ </target>
+
+
+ <target name="phpcpd" description="copy/paste detector">
+  <exec dir="${project.basedir}" checkreturn="false" passthru="true"
+        command="phpcpd --log-pmd tests/logs/cpd.xml ${project.basedir}"
+        />
+ </target>
+
+
+ <target name="phpcs" description="php code sniffer">
+  <exec dir="${project.basedir}" checkreturn="false" passthru="true"
+        command="phpcs --standard=TYPO3 --ignore=tests,.svn --report-file=${project.basedir}/tests/logs/checkstyle.xml --report=checkstyle ${project.basedir}"
+        />
+ </target>
+
+
+ <target name="phploc" description="count lines of code">
+  <exec dir="${project.basedir}" checkreturn="false" passthru="true"
+        command="phploc --count-tests --log-csv tests/logs/loc.csv ${project.basedir}"
+        />
+ </target>
+
+
+ <target name="phpmd" description="php mess detector">
+  <!-- checkreturn wieder einschalten? -->
+  <exec dir="${project.basedir}" checkreturn="false" passthru="true"
+        command="phpmd ${project.basedir} xml codesize,design,naming,unusedcode --exclude tests --reportfile tests/logs/pmd.xml"
+        />
+ </target>
+
+
+ <target name="test-gen-report" description="generate the phpunit report html files">
+  <phpunitreport infile="tests/logs/junit.xml"
+                 format="frames"
+                 todir="tests/doc/coverage"
+                 />
+ </target>
+
+
+ <target name="clean">
+  <delete dir="tests/doc" quiet="true" includeemptydirs="true"/>
+  <delete dir="tests/logs" quiet="true" includeemptydirs="true"/>
+ </target>
+
+
+ <target name="prepare">
+  <mkdir dir="tests/doc/api"/>
+ </target>
+
+</project>
