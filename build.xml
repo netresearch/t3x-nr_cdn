@@ -15,9 +15,6 @@
 
 
  <target name="docblox" description="generate api docs" depends="prepare">
-  <exec checkreturn="false" passthru="true"
-        command="docblox --directory ${project.basedir}/src --target ${project.basedir}/tests/doc/api --title='${phing.project.name}'"
-        />
  </target>
 
 
