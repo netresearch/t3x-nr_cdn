@@ -16,44 +16,84 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     public function testUser()
     {
-        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'] = array();
-        $GLOBALS['TSFE']->TYPO3_CONF_VARS['FE']['userFuncClassPrefix'] = '';
-        $conf = array(
-            'includeLibs' => null,
-            'userFunc' => 'UxContentTest->tx_dummyUserFunc'
-        );
-        $uxc = new ux_tslib_cObj();
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl';
 
-        $this->assertSame('foo', $uxc->USER($conf));
+        $uxc = new ux_tslib_cObj();
+        $uxc->__USER = '"fileadmin/';
+        $this->assertSame('"UnittestUrl/fileadmin/', $uxc->USER(array()));
+        unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']);
+    }
+
+    public function testUserNoUrl()
+    {
+        $uxc = new ux_tslib_cObj();
+        $uxc->__USER = 'unittest';
+        $this->assertSame('unittest', $uxc->USER(array()));
+
     }
 
 
     public function testMultimedia()
     {
+        $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = TYPO3_mainDir . 'ext';
+        $uxc = new ux_tslib_cObj();
+        $ret = $uxc->MULTIMEDIA(array());
+        $testUrlBefore = $uxc->testUrlBefore;
+        $this->assertSame(TYPO3_mainDir . 'ext/', $testUrlBefore);
 
-        $ucx = $this->getMock(
-            'ux_tslib_cObj',
-            array('MULTIMEDIA')
-        );
-        $ucx->expects($this->any())
-            ->method('MULTIMEDIA')
-            ->will($this->returnValue('test'));
+        $this->assertSame('UNITTEST', $GLOBALS['TSFE']->absRefPrefix);
 
-        $this->assertSame('test',$ucx->MULTIMEDIA(array()));
+        unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']);
+
+    }
+
+    public function testMultimediaNoUrl()
+    {
+        $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
+        $uxc = new ux_tslib_cObj();
+        $ret = $uxc->MULTIMEDIA(array());
+        $testUrlBefore = $uxc->testUrlBefore;
+        $this->assertSame('UNITTEST', $testUrlBefore);
+
+        $this->assertSame('UNITTEST', $GLOBALS['TSFE']->absRefPrefix);
 
     }
 
     public function testCImage()
     {
+        $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = TYPO3_mainDir . 'ext';
         $ucx = $this->getMock(
             'ux_tslib_cObj',
-            array('cImage')
+            array('getImgResource')
+        );
+        $info[3] = 'fileadmin/';
+        $ucx->expects($this->once())
+            ->method('getImgResource')
+            ->will($this->returnValue($info));
+
+
+        $ucx->cImage('', array());
+        $testUrlBefore = $ucx->testUrlBefore;
+        $this->assertSame(TYPO3_mainDir . 'ext/', $testUrlBefore);
+        $this->assertSame('UNITTEST', $GLOBALS['TSFE']->absRefPrefix);
+
+        unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']);
+
+
+    }
+
+    public function testCImageNoInfoArray()
+    {
+        $ucx = $this->getMock(
+            'ux_tslib_cObj',
+            array('getImgResource')
         );
         $ucx->expects($this->any())
-            ->method('cImage')
-            ->will($this->returnValue('test'));
-
-        $this->assertSame('test', $ucx->cImage('', array()));
+            ->method('getImgResource')
+            ->will($this->returnValue(''));
+        $this->assertNull($ucx->cImage('', array()));
 
     }
 
@@ -64,4 +104,29 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $this->assertSame('ABC', $GLOBALS['TSFE']->absRefPrefix);
     }
 
+}
+
+class  tslib_cObj
+{
+    var $__USER = null;
+
+    var $testUrlBefore = 'UNITTEST';
+
+
+    function USER($conf, $ext = '')
+    {
+        return $this->__USER;
+    }
+
+    function MULTIMEDIA($conf, $ext = '')
+    {
+         $this->testUrlBefore = $GLOBALS['TSFE']->absRefPrefix;
+    }
+
+    function cImage($file='',$conf='')
+    {
+        $this->testUrlBefore = $GLOBALS['TSFE']->absRefPrefix;
+
+
+    }
 }
