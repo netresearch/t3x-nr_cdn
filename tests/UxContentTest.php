@@ -11,44 +11,83 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
         return 'foo';
     }
+    
+    
+    
+    public function tearDown()
+    {
+    	unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']);
+    }
 
 
 
-    public function testUser()
+    public function testUserPrefixesFileadminPathInUserContent()
     {
         $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl';
 
         $uxc = new ux_tslib_cObj();
-        $uxc->__USER = '"fileadmin/';
-        $this->assertSame('"UnittestUrl/fileadmin/', $uxc->USER(array()));
-        unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']);
+        $uxc->__USER = '"fileadmin/moredepth';
+        $this->assertSame(
+        	'"UnittestUrl/fileadmin/moredepth', $uxc->USER(array()),
+        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+        );
     }
 
-    public function testUserNoUrl()
+    public function testUserMustNotPrefixNonFileadminPathInUserContent()
     {
-        $uxc = new ux_tslib_cObj();
-        $uxc->__USER = 'unittest';
-        $this->assertSame('unittest', $uxc->USER(array()));
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl';
 
+        $uxc = new ux_tslib_cObj();
+        $uxc->__USER = '"otherpath/';
+        $this->assertSame(
+        	'"otherpath/', $uxc->USER(array()),
+        	'"otherpath/" path must not be prefixed with "UnittestUrl/"'
+        );
     }
 
+    public function testUserMustNotAlterFileadminPathIfEmptyCdnUrl()
+    {
+    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
+    	
+        $uxc = new ux_tslib_cObj();
+        $uxc->__USER = '"fileadmin/';
+        $this->assertSame(
+        	'"fileadmin/', $uxc->USER(array()),
+        	'"fileadmin/" path must be unchanged'
+        );
+    }
+    
+    public function testUserMustNotAlterFileadminPathIfCdnUrlIsNotSet()
+    {
+    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'] = array();
+    	
+        $uxc = new ux_tslib_cObj();
+        $uxc->__USER = '"fileadmin/';
+        $this->assertSame(
+        	'"fileadmin/', $uxc->USER(array()),
+        	'"fileadmin/" path must be unchanged'
+        );
+    }
 
-    public function testMultimedia()
+    public function testMultimediaDoesAlterAndRestoreAbsPrefix()
     {
         $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
-        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = TYPO3_mainDir . 'ext';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'unittest_path';
         $uxc = new ux_tslib_cObj();
         $ret = $uxc->MULTIMEDIA(array());
-        $testUrlBefore = $uxc->testUrlBefore;
-        $this->assertSame(TYPO3_mainDir . 'ext/', $testUrlBefore);
+        
+        $this->assertSame(
+        	'unittest_path/', $uxc->testUrlBefore,
+        	'"$GLOBALS[\'TSFE\']->absRefPrefix" must be same as nr_cdn.URL when parent::MULTIMEDIA() is invoked.'
+        );
 
-        $this->assertSame('UNITTEST', $GLOBALS['TSFE']->absRefPrefix);
-
-        unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']);
-
+        $this->assertSame(
+        	'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
+        	'"$GLOBALS[\'TSFE\']->absRefPrefix" must be restored or same as before method invocation.'
+        );
     }
 
-    public function testMultimediaNoUrl()
+    public function testMultimediaMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
         $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
         $uxc = new ux_tslib_cObj();
@@ -57,13 +96,12 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $this->assertSame('UNITTEST', $testUrlBefore);
 
         $this->assertSame('UNITTEST', $GLOBALS['TSFE']->absRefPrefix);
-
     }
 
     public function testCImage()
     {
         $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
-        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = TYPO3_mainDir . 'ext';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'ext';
         $ucx = $this->getMock(
             'ux_tslib_cObj',
             array('getImgResource')
@@ -73,15 +111,10 @@ class UxContentTest extends PHPUnit_Framework_TestCase
             ->method('getImgResource')
             ->will($this->returnValue($info));
 
-
         $ucx->cImage('', array());
         $testUrlBefore = $ucx->testUrlBefore;
-        $this->assertSame(TYPO3_mainDir . 'ext/', $testUrlBefore);
+        $this->assertSame('ext/', $testUrlBefore);
         $this->assertSame('UNITTEST', $GLOBALS['TSFE']->absRefPrefix);
-
-        unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']);
-
-
     }
 
     public function testCImageNoInfoArray()
@@ -94,16 +127,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
             ->method('getImgResource')
             ->will($this->returnValue(''));
         $this->assertNull($ucx->cImage('', array()));
-
     }
-
-    public function testSetTypo3AbsRefPrefix()
-    {
-        $GLOBALS['TSFE']->absRefPrefix = 'ABC';
-
-        $this->assertSame('ABC', $GLOBALS['TSFE']->absRefPrefix);
-    }
-
 }
 
 class  tslib_cObj
