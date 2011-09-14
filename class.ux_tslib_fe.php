@@ -1,6 +1,6 @@
 <?php
 
-require_once PATH_site . 'typo3conf/ext/aida_dre_countryxs/class.ux_tslib_fe.php';
+require_once PATH_site . 'typo3conf/ext/aida_common/ux/class.ux_tslib_fe.php';
 
 class ux_ux_tslib_fe extends ux_tslib_fe
 {
