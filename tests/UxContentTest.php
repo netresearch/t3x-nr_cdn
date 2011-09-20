@@ -47,7 +47,6 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     public function testUserMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
-        $this->markTestSkipped('FIXME: fix that bug in http://jira.aida.de/jira/browse/SDM-4961');
     	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
 
         $uxc = new ux_tslib_cObj();
