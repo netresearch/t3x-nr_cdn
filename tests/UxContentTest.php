@@ -93,9 +93,15 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $uxc = new ux_tslib_cObj();
         $ret = $uxc->MULTIMEDIA(array());
         $testUrlBefore = $uxc->testUrlBefore;
-        $this->assertSame('UNITTEST', $testUrlBefore);
+        $this->assertSame(
+        	'UNITTEST', $testUrlBefore,
+        	'absRefPrefix must not be altered, cause CDN URL is empty'
+        );
 
-        $this->assertSame('UNITTEST', $GLOBALS['TSFE']->absRefPrefix);
+        $this->assertSame(
+        	'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
+        	'absRefPrefix must have same value as before calling MULTIMEDIA()'
+        );
     }
 
     public function testCImage()
@@ -113,20 +119,31 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
         $ucx->cImage('', array());
         $testUrlBefore = $ucx->testUrlBefore;
-        $this->assertSame('ext/', $testUrlBefore);
-        $this->assertSame('UNITTEST', $GLOBALS['TSFE']->absRefPrefix);
+        $this->assertSame(
+        	'ext/', $testUrlBefore,
+        	'absRefPrefix must be altered to CDN URL'
+        );
+        $this->assertSame(
+        	'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
+        	'absRefPrefix must have same value as before calling MULTIMEDIA()'
+        );
     }
 
-    public function testCImageNoInfoArray()
+    public function testCImageReturnsNullIfNoInfoArray()
     {
         $ucx = $this->getMock(
             'ux_tslib_cObj',
             array('getImgResource')
         );
+        
         $ucx->expects($this->any())
             ->method('getImgResource')
             ->will($this->returnValue(''));
-        $this->assertNull($ucx->cImage('', array()));
+        
+        $this->assertNull(
+            $ucx->cImage('', array()),
+            'cImage() must return null if called with invalid image'
+        );
     }
 }
 
