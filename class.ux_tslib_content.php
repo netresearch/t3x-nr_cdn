@@ -21,7 +21,7 @@ class ux_tslib_cObj extends tslib_cObj
     {
         $arConfig = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
         $content = $this->stdWrap($conf['value'],$conf);
-        if (is_array($arConfig) && isset($arConfig['URL'])) {
+        if (is_array($arConfig) && ! empty($arConfig['URL'])) {
             $content = str_replace(
                 '"fileadmin/',
                 '"' . $arConfig['URL'] . '/fileadmin/',
@@ -44,7 +44,7 @@ class ux_tslib_cObj extends tslib_cObj
     {
         $content = parent::USER($conf, $ext);
         $arConfig = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
-        if (is_array($arConfig) && isset($arConfig['URL'])) {
+        if (is_array($arConfig) && ! empty($arConfig['URL'])) {
             $content = str_replace(
                 '"fileadmin/',
                 '"' . $arConfig['URL'] . '/fileadmin/',
@@ -94,7 +94,7 @@ class ux_tslib_cObj extends tslib_cObj
         if (is_array($info)) {
             $arConfig = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
             $tmpAbsPrefix = $GLOBALS['TSFE']->absRefPrefix;
-            if (is_array($arConfig) && isset($arConfig['URL'])
+            if (is_array($arConfig) && ! empty($arConfig['URL'])
                 && strncmp('fileadmin/', $info[3], 10) === 0
             ) {
                 $GLOBALS['TSFE']->absRefPrefix = $arConfig['URL'] . '/';
