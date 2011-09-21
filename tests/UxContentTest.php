@@ -21,9 +21,77 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
 
 
+    /**
+     * @covers ux_tslib_cObj::TEXT
+     * @covers ux_tslib_cObj::addCdnPrefix
+     */
+    public function testTextPrefixesFileadminPathInTextContent()
+    {
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl/';
+
+        $uxc = new ux_tslib_cObj();
+        $uxc->__TEXT = '"fileadmin/moredepth';
+        $this->assertSame(
+        	'"UnittestUrl/fileadmin/moredepth', $uxc->TEXT(array()),
+        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+        );
+    }
+    
+    /**
+     * @covers ux_tslib_cObj::TEXT
+     * @covers ux_tslib_cObj::addCdnPrefix
+     */
+    public function testTextMustNotPrefixNonFileadminPathInTextContent()
+    {
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl/';
+
+        $uxc = new ux_tslib_cObj();
+        $uxc->__TEXT = '"otherpath/';
+        $this->assertSame(
+        	'"otherpath/', $uxc->TEXT(array()),
+        	'"otherpath/" path must not be prefixed with "UnittestUrl/"'
+        );
+    }
+    
+    /**
+     * @covers ux_tslib_cObj::TEXT
+     * @covers ux_tslib_cObj::addCdnPrefix
+     */
+    public function testTextMustNotAlterFileadminPathIfEmptyCdnUrl()
+    {
+    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
+
+        $uxc = new ux_tslib_cObj();
+        $uxc->__TEXT = '"fileadmin/';
+        $this->assertSame(
+        	'"fileadmin/', $uxc->TEXT(array()),
+        	'"fileadmin/" path must be unchanged'
+        );
+    }
+    
+    /**
+     * @covers ux_tslib_cObj::TEXT
+     * @covers ux_tslib_cObj::addCdnPrefix
+     */
+    public function testTextMustNotAlterFileadminPathIfCdnUrlIsNotSet()
+    {
+    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'] = array();
+
+        $uxc = new ux_tslib_cObj();
+        $uxc->__TEXT = '"fileadmin/';
+        $this->assertSame(
+        	'"fileadmin/', $uxc->TEXT(array()),
+        	'"fileadmin/" path must be unchanged'
+        );
+    }
+    
+    /**
+     * @covers ux_tslib_cObj::USER
+     * @covers ux_tslib_cObj::addCdnPrefix
+     */
     public function testUserPrefixesFileadminPathInUserContent()
     {
-        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl/';
 
         $uxc = new ux_tslib_cObj();
         $uxc->__USER = '"fileadmin/moredepth';
@@ -32,10 +100,14 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
     }
-
+    
+    /**
+     * @covers ux_tslib_cObj::USER
+     * @covers ux_tslib_cObj::addCdnPrefix
+     */
     public function testUserMustNotPrefixNonFileadminPathInUserContent()
     {
-        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl/';
 
         $uxc = new ux_tslib_cObj();
         $uxc->__USER = '"otherpath/';
@@ -44,7 +116,11 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"otherpath/" path must not be prefixed with "UnittestUrl/"'
         );
     }
-
+    
+    /**
+     * @covers ux_tslib_cObj::USER
+     * @covers ux_tslib_cObj::addCdnPrefix
+     */
     public function testUserMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
     	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
@@ -56,7 +132,11 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be unchanged'
         );
     }
-
+    
+    /**
+     * @covers ux_tslib_cObj::USER
+     * @covers ux_tslib_cObj::addCdnPrefix
+     */
     public function testUserMustNotAlterFileadminPathIfCdnUrlIsNotSet()
     {
     	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'] = array();
@@ -68,11 +148,15 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be unchanged'
         );
     }
-
+    
+    /**
+     * @covers ux_tslib_cObj::MULTIMEDIA
+     * @covers ux_tslib_cObj::setAbsRefPrefix
+     */
     public function testMultimediaDoesAlterAndRestoreAbsPrefix()
     {
         $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
-        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'unittest_path';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'unittest_path/';
         $uxc = new ux_tslib_cObj();
         $ret = $uxc->MULTIMEDIA(array());
 
@@ -86,7 +170,11 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"$GLOBALS[\'TSFE\']->absRefPrefix" must be restored or same as before method invocation.'
         );
     }
-
+    
+    /**
+     * @covers ux_tslib_cObj::MULTIMEDIA
+     * @covers ux_tslib_cObj::setAbsRefPrefix
+     */
     public function testMultimediaMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
         $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
@@ -103,7 +191,10 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'absRefPrefix must have same value as before calling MULTIMEDIA()'
         );
     }
-
+    
+    /**
+     * @covers ux_tslib_cObj::cImage
+     */
     public function testCImage()
     {
         $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
@@ -120,7 +211,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $ucx->cImage('', array());
         $testUrlBefore = $ucx->testUrlBefore;
         $this->assertSame(
-        	'ext/', $testUrlBefore,
+        	'ext', $testUrlBefore,
         	'absRefPrefix must be altered to CDN URL'
         );
         $this->assertSame(
@@ -128,7 +219,10 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'absRefPrefix must have same value as before calling MULTIMEDIA()'
         );
     }
-
+    
+    /**
+     * @covers ux_tslib_cObj::cImage
+     */
     public function testCImageReturnsNullIfNoInfoArray()
     {
         $ucx = $this->getMock(
@@ -150,10 +244,16 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 class  tslib_cObj
 {
     var $__USER = null;
+    var $__TEXT = null;
 
     var $testUrlBefore = 'UNITTEST';
 
 
+    function TEXT($conf)
+    {
+        return $this->__TEXT;
+    }
+    
     function USER($conf, $ext = '')
     {
         return $this->__USER;
