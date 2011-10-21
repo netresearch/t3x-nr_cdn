@@ -3,11 +3,16 @@
  <!-- phing build file -->
 
  <target name="build" description="Run a build on the CI server"
-         depends="phpunit,pdepend,phpcpd,phpcs,phploc,phpmd,docblox"
+         depends="pdepend,phpcpd,phpcs,phploc,phpmd,docblox,test"
          />
 
+ <target name="test" description="Runs all unit tests"
+        depends="phpunit"
+ />
 
- <target name="phpunit" description="run tests and generate log file">
+
+ <target name="phpunit" description="run tests and generate log file"
+         depends="cleanTypo3,prepare">
   <exec dir="tests" checkreturn="true" passthru="true"
         command="phpunit --log-junit logs/junit.xml --coverage-clover logs/clover.xml --testdox-html logs/dox.html --coverage-html doc/coverage ."
         />
@@ -65,6 +70,15 @@
  <target name="clean">
   <delete dir="tests/doc" quiet="true" includeemptydirs="true"/>
   <delete dir="tests/logs" quiet="true" includeemptydirs="true"/>
+ </target>
+
+ <target name="cleanTypo3" description="clean temporary typo3 files">
+   <!-- typo3conf/ -->
+   <delete>
+     <fileset dir="../../">
+       <include name="temp_CACHED_*" />
+     </fileset>
+   </delete>
  </target>
 
 
