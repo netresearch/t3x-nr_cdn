@@ -36,7 +36,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::TEXT
      * @covers ux_tslib_cObj::addCdnPrefix
@@ -52,7 +52,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"otherpath/" path must not be prefixed with "UnittestUrl/"'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::TEXT
      * @covers ux_tslib_cObj::addCdnPrefix
@@ -68,7 +68,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be unchanged'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::TEXT
      * @covers ux_tslib_cObj::addCdnPrefix
@@ -84,7 +84,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be unchanged'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::USER
      * @covers ux_tslib_cObj::addCdnPrefix
@@ -100,7 +100,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::USER
      * @covers ux_tslib_cObj::addCdnPrefix
@@ -116,7 +116,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"otherpath/" path must not be prefixed with "UnittestUrl/"'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::USER
      * @covers ux_tslib_cObj::addCdnPrefix
@@ -132,7 +132,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be unchanged'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::USER
      * @covers ux_tslib_cObj::addCdnPrefix
@@ -148,7 +148,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"fileadmin/" path must be unchanged'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::MULTIMEDIA
      * @covers ux_tslib_cObj::setAbsRefPrefix
@@ -170,7 +170,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'"$GLOBALS[\'TSFE\']->absRefPrefix" must be restored or same as before method invocation.'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::MULTIMEDIA
      * @covers ux_tslib_cObj::setAbsRefPrefix
@@ -191,7 +191,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'absRefPrefix must have same value as before calling MULTIMEDIA()'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::cImage
      */
@@ -219,7 +219,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         	'absRefPrefix must have same value as before calling MULTIMEDIA()'
         );
     }
-    
+
     /**
      * @covers ux_tslib_cObj::cImage
      */
@@ -229,11 +229,11 @@ class UxContentTest extends PHPUnit_Framework_TestCase
             'ux_tslib_cObj',
             array('getImgResource')
         );
-        
+
         $ucx->expects($this->any())
             ->method('getImgResource')
             ->will($this->returnValue(''));
-        
+
         $this->assertNull(
             $ucx->cImage('', array()),
             'cImage() must return null if called with invalid image'
@@ -241,33 +241,4 @@ class UxContentTest extends PHPUnit_Framework_TestCase
     }
 }
 
-class  tslib_cObj
-{
-    var $__USER = null;
-    var $__TEXT = null;
-
-    var $testUrlBefore = 'UNITTEST';
-
-
-    function TEXT($conf)
-    {
-        return $this->__TEXT;
-    }
-    
-    function USER($conf, $ext = '')
-    {
-        return $this->__USER;
-    }
-
-    function MULTIMEDIA($conf, $ext = '')
-    {
-         $this->testUrlBefore = $GLOBALS['TSFE']->absRefPrefix;
-    }
-
-    function cImage($file='',$conf='')
-    {
-        $this->testUrlBefore = $GLOBALS['TSFE']->absRefPrefix;
-
-
-    }
-}
+?>
