@@ -1,3 +1,6 @@
+2011-12-09 Alexander Opitz <alexander.opitz@netresearch.de>
+ * SDM-8765: don't call restore if not expected
+
 2011-09-14 Christian Weiske <christian.weiske@netresearch.de>
  * AMTB-48: Use ux_tslib_fe from aida_common
 
