@@ -23,6 +23,7 @@ $EM_CONF[$_EXTKEY] = array(
         'depends' => array(
             'typo3' => '4.3.0-0.0.0',
             'aida_common' => '0.0.1-',
+            'aida_autoloader' => '1.4.0-',
         ),
         'conflicts' => array(
         ),
