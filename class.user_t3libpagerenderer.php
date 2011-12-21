@@ -47,11 +47,17 @@ class user_t3libpagerenderer
         );
 
         foreach ($arToProcess as $strToProcess) {
+            $arParamsProcess = array();
             foreach ($arParams[$strToProcess] as $strFileName => $arConfig) {
-                $strFileNameNew = $this->addCdnHost($strFileName);
-
-                unset($arParams[$strToProcess][$strFileName]);
-                $arParamsProcess[$strFileNameNew] = $arConfig;
+                if ($strToProcess === 'jsLibs') {
+                    $arParamsProcess[$strFileName] = $arConfig;
+                    $arParamsProcess[$strFileName]['file']
+                        = $this->addCdnHost($arConfig['file']);
+                } else {
+                    $strFileNameNew = $this->addCdnHost($strFileName);
+                    unset($arParams[$strToProcess][$strFileName]);
+                    $arParamsProcess[$strFileNameNew] = $arConfig;
+                }
             }
             $arParams[$strToProcess] = $arParamsProcess;
         }
