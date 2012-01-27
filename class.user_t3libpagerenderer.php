@@ -52,35 +52,15 @@ class user_t3libpagerenderer
                 if ($strToProcess === 'jsLibs') {
                     $arParamsProcess[$strFileName] = $arConfig;
                     $arParamsProcess[$strFileName]['file']
-                        = $this->addCdnHost($arConfig['file']);
+                        = Netresearch_Cdn::addHost($arConfig['file']);
                 } else {
-                    $strFileNameNew = $this->addCdnHost($strFileName);
+                    $strFileNameNew = Netresearch_Cdn::addHost($strFileName);
                     unset($arParams[$strToProcess][$strFileName]);
                     $arParamsProcess[$strFileNameNew] = $arConfig;
                 }
             }
             $arParams[$strToProcess] = $arParamsProcess;
         }
-    }
-
-    /**
-     * Adds the cdn path in front of the string, if it is fileadmin.
-     * 
-     * @param string $strFileName Name for a file to add cdn path
-     * 
-     * @return string The file path with added cdn url, if file is in "fileadmin/"
-     */
-    private function addCdnHost($strFileName)
-    {
-        $strUrl = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
-        
-        $strFileName = str_replace(
-            'fileadmin/',
-            $strUrl . 'fileadmin/',
-            $strFileName
-        );
-        
-        return $strFileName;
     }
 }
 

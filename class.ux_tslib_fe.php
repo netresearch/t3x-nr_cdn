@@ -75,16 +75,13 @@ class ux_ux_tslib_fe extends ux_tslib_fe
      */
     function replaceHeaderData()
     {
-        $arConfig = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
+        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
+            return;
+        }
         
-        if (is_array($arConfig) && ! empty($arConfig['URL'])) {
-            foreach ($this->additionalHeaderData as $strKey => $strContent) {
-                $this->additionalHeaderData[$strKey] = str_replace(
-                    '"fileadmin/',
-                    '"' . $arConfig['URL'] . '/fileadmin/',
-                    $strContent
-                );
-            }
+        foreach ($this->additionalHeaderData as $strKey => $strContent) {
+            $this->additionalHeaderData[$strKey] 
+                = Netresearch_Cdn::addCdnPrefix($strContent);
         }
     }
 }

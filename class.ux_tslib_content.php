@@ -28,62 +28,6 @@ if (t3lib_extMgm::isLoaded('obts')) {
 class ux_tslib_cObj extends tslib_cObj
 {
     /**
-     * Prefix URLs in content with CDN path.
-     * 
-     * @param string $strContent content where to replace URls with CDN path
-     * 
-     * @return string
-     */
-    protected static function addCdnPrefix($strContent)
-    {
-        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
-            return $strContent;
-        }
-                
-        $strUrl = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
-        
-        $strContent = str_replace(
-            '"fileadmin/',
-            '"' . $strUrl . 'fileadmin/',
-            $strContent
-        );
-        
-        return $strContent;
-    }
-    
-    
-    
-    /**
-     * Set (restore) $GLOBALS['TSFE']->absRefPrefix and returns old absRefPrefix
-     * or false if not changed. 
-     * 
-     * @param string $restore absRefPrefix path to set, or false to ignore
-     * 
-     * @return string old absRefPrefix or false if not changed
-     */
-    protected static function setAbsRefPrefix($restore = false)
-    {
-        if (false !== $restore) {
-            $GLOBALS['TSFE']->absRefPrefix = $restore;
-            return false;
-        }
-        
-        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
-            return false;
-        }
-        
-        $restore = $GLOBALS['TSFE']->absRefPrefix;
-        
-        self::setAbsRefPrefix(
-            $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']
-        );
-
-        return $restore;
-    }
-    
-    
-    
-    /**
      * Rendering the cObject, TEXT
      *
      * @param array $conf TypoScript properties
@@ -93,7 +37,7 @@ class ux_tslib_cObj extends tslib_cObj
      */
     function TEXT($conf)
     {
-        return self::addCdnPrefix(parent::TEXT($conf));
+        return Netresearch_Cdn::addCdnPrefix(parent::TEXT($conf));
     }
 
 
@@ -109,7 +53,7 @@ class ux_tslib_cObj extends tslib_cObj
      */
     function USER($conf, $ext = '')
     {
-        return self::addCdnPrefix(parent::USER($conf, $ext));
+        return Netresearch_Cdn::addCdnPrefix(parent::USER($conf, $ext));
     }
 
     
@@ -124,11 +68,11 @@ class ux_tslib_cObj extends tslib_cObj
      */
     function MULTIMEDIA($conf)    
     {
-        $restore = self::setAbsRefPrefix();
+        $restore = Netresearch_Cdn::setAbsRefPrefix();
 
         $content = parent::MULTIMEDIA($conf);
         
-        self::setAbsRefPrefix($restore);
+        Netresearch_Cdn::setAbsRefPrefix($restore);
         
         return $content;
     }
@@ -152,13 +96,13 @@ class ux_tslib_cObj extends tslib_cObj
         $bNeedAbsRefPrefix = ('fileadmin/' === substr($info[3], 0, 10));
 
         if ($bNeedAbsRefPrefix) {
-            $restore = self::setAbsRefPrefix();
+            $restore = Netresearch_Cdn::setAbsRefPrefix();
         }
 
         $content = parent::cImage($file, $conf);
 
         if ($bNeedAbsRefPrefix) {
-            self::setAbsRefPrefix($restore);
+            Netresearch_Cdn::setAbsRefPrefix($restore);
         }
 
         return $content;

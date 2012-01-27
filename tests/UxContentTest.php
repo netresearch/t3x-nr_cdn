@@ -23,7 +23,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::TEXT
-     * @covers ux_tslib_cObj::addCdnPrefix
+     * @covers Netresearch_Cdn::addCdnPrefix
      */
     public function testTextPrefixesFileadminPathInTextContent()
     {
@@ -39,7 +39,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::TEXT
-     * @covers ux_tslib_cObj::addCdnPrefix
+     * @covers Netresearch_Cdn::addCdnPrefix
      */
     public function testTextMustNotPrefixNonFileadminPathInTextContent()
     {
@@ -55,7 +55,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::TEXT
-     * @covers ux_tslib_cObj::addCdnPrefix
+     * @covers Netresearch_Cdn::addCdnPrefix
      */
     public function testTextMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
@@ -71,7 +71,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::TEXT
-     * @covers ux_tslib_cObj::addCdnPrefix
+     * @covers Netresearch_Cdn::addCdnPrefix
      */
     public function testTextMustNotAlterFileadminPathIfCdnUrlIsNotSet()
     {
@@ -87,7 +87,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::USER
-     * @covers ux_tslib_cObj::addCdnPrefix
+     * @covers Netresearch_Cdn::addCdnPrefix
      */
     public function testUserPrefixesFileadminPathInUserContent()
     {
@@ -103,7 +103,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::USER
-     * @covers ux_tslib_cObj::addCdnPrefix
+     * @covers Netresearch_Cdn::addCdnPrefix
      */
     public function testUserMustNotPrefixNonFileadminPathInUserContent()
     {
@@ -119,7 +119,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::USER
-     * @covers ux_tslib_cObj::addCdnPrefix
+     * @covers Netresearch_Cdn::addCdnPrefix
      */
     public function testUserMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
@@ -135,7 +135,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::USER
-     * @covers ux_tslib_cObj::addCdnPrefix
+     * @covers Netresearch_Cdn::addCdnPrefix
      */
     public function testUserMustNotAlterFileadminPathIfCdnUrlIsNotSet()
     {
@@ -151,7 +151,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::MULTIMEDIA
-     * @covers ux_tslib_cObj::setAbsRefPrefix
+     * @covers Netresearch_Cdn::setAbsRefPrefix
      */
     public function testMultimediaDoesAlterAndRestoreAbsPrefix()
     {
@@ -173,7 +173,7 @@ class UxContentTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers ux_tslib_cObj::MULTIMEDIA
-     * @covers ux_tslib_cObj::setAbsRefPrefix
+     * @covers Netresearch_Cdn::setAbsRefPrefix
      */
     public function testMultimediaMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
