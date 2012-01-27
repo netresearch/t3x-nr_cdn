@@ -25,4 +25,6 @@ if (TYPO3_MODE == 'FE') {
         = t3lib_extMgm::extPath('nr_cdn') . 'class.ux_tslib_fe.php';
     $TYPO3_CONF_VARS['EXTCONF']['css_filelinks']['pi1_hooks']['getFileUrl']
         = 'tx_Netresearch_Cdn_HookCssFilelinksGetFileUrl';
+    $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][]
+        = 'EXT:nr_cdn/class.user_t3libpagerenderer.php:user_t3libpagerenderer->renderPreProcess';
 }

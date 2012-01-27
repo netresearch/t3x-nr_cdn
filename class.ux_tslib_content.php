@@ -77,7 +77,7 @@ class ux_tslib_cObj extends tslib_cObj
         self::setAbsRefPrefix(
             $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']
         );
-        
+
         return $restore;
     }
     
@@ -149,16 +149,18 @@ class ux_tslib_cObj extends tslib_cObj
     function cImage($file, $conf) 
     {
         $info = $this->getImgResource($file, $conf['file.']);
-        
-        $restore = false;
-        if ('fileadmin/' === substr($info[3], 0, 10)) {
+        $bNeedAbsRefPrefix = ('fileadmin/' === substr($info[3], 0, 10));
+
+        if ($bNeedAbsRefPrefix) {
             $restore = self::setAbsRefPrefix();
         }
 
         $content = parent::cImage($file, $conf);
-        
-        self::setAbsRefPrefix($restore);
-        
+
+        if ($bNeedAbsRefPrefix) {
+            self::setAbsRefPrefix($restore);
+        }
+
         return $content;
     }
 }

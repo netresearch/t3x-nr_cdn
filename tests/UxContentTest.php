@@ -223,6 +223,34 @@ class UxContentTest extends PHPUnit_Framework_TestCase
     /**
      * @covers ux_tslib_cObj::cImage
      */
+    public function testCImageNoUrlForTheCDN()
+    {
+        $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'ext';
+        $ucx = $this->getMock(
+            'ux_tslib_cObj',
+            array('getImgResource')
+        );
+        $info[3] = 'typo3temp/';
+        $ucx->expects($this->once())
+            ->method('getImgResource')
+            ->will($this->returnValue($info));
+
+        $ucx->cImage('', array());
+        $testUrlBefore = $ucx->testUrlBefore;
+        $this->assertSame(
+        	'UNITTEST', $testUrlBefore,
+        	'absRefPrefix must be original'
+        );
+        $this->assertSame(
+        	'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
+        	'absRefPrefix must have same value as before calling MULTIMEDIA()'
+        );
+    }
+
+    /**
+     * @covers ux_tslib_cObj::cImage
+     */
     public function testCImageReturnsNullIfNoInfoArray()
     {
         $ucx = $this->getMock(
