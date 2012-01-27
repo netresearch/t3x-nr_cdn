@@ -8,31 +8,31 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl/';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'UnittestUrl/';
     }
 
     public function tearDown()
     {
-    	unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']);
+        unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']);
     }
 
     public function testRenderPreProcess()
     {
         $arJsLibs = array(
             'inFileadmin' => array('file' => 'fileadmin/bla'),
-            'inTypo3temp' => array('file' => 'typo3temp/bla'),
+            'inTypo3temp' => array('file' => 'other/bla'),
         );
         $arJsFiles = array(
             'fileadmin/bla1' => array(),
-            'typo3temp/bla1' => array(),
+            'other/bla1' => array(),
         );
         $arJsFooterFiles = array(
             'fileadmin/bla2' => array(),
-            'typo3temp/bla2' => array(),
+            'other/bla2' => array(),
         );
         $arCssFiles = array(
             'fileadmin/bla3' => array(),
-            'typo3temp/bla3' => array(),
+            'other/bla3' => array(),
         );
         $class = new user_t3libpagerenderer();
         $arTest = array(
@@ -45,61 +45,61 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         $class->renderPreProcess($arTest, null);
 
         $this->assertSame(
-        	$arTest['jsLibs']['inFileadmin']['file'],
+            $arTest['jsLibs']['inFileadmin']['file'],
             'UnittestUrl/fileadmin/bla',
-        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
-        	$arTest['jsLibs']['inTypo3temp']['file'],
-            'typo3temp/bla',
-        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            $arTest['jsLibs']['inTypo3temp']['file'],
+            'other/bla',
+            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
-        	count($arTest['jsLibs']),
+            count($arTest['jsLibs']),
             2,
-        	'There should be only 2 elements'
+            'There should be only 2 elements'
         );
 
         $this->assertTrue(
-        	isset($arTest['jsFiles']['UnittestUrl/fileadmin/bla1']),
-        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            isset($arTest['jsFiles']['UnittestUrl/fileadmin/bla1']),
+            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertTrue(
-        	isset($arTest['jsFiles']['typo3temp/bla1']),
-        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            isset($arTest['jsFiles']['other/bla1']),
+            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
-        	count($arTest['jsFiles']),
+            count($arTest['jsFiles']),
             2,
-        	'There should be only 2 elements'
+            'There should be only 2 elements'
         );
 
         $this->assertTrue(
-        	isset($arTest['jsFooterFiles']['UnittestUrl/fileadmin/bla2']),
-        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            isset($arTest['jsFooterFiles']['UnittestUrl/fileadmin/bla2']),
+            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertTrue(
-        	isset($arTest['jsFooterFiles']['typo3temp/bla2']),
-        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            isset($arTest['jsFooterFiles']['other/bla2']),
+            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
-        	count($arTest['jsFooterFiles']),
+            count($arTest['jsFooterFiles']),
             2,
-        	'There should be only 2 elements'
+            'There should be only 2 elements'
         );
 
         $this->assertTrue(
-        	isset($arTest['cssFiles']['UnittestUrl/fileadmin/bla3']),
-        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            isset($arTest['cssFiles']['UnittestUrl/fileadmin/bla3']),
+            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertTrue(
-        	isset($arTest['cssFiles']['typo3temp/bla3']),
-        	'"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            isset($arTest['cssFiles']['other/bla3']),
+            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
-        	count($arTest['cssFiles']),
+            count($arTest['cssFiles']),
             2,
-        	'There should be only 2 elements'
+            'There should be only 2 elements'
         );
     }
 }

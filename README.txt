@@ -1,6 +1,8 @@
-Typical usage from TypoScript:
+TypoScript Configuration
+========================
 
-Constants:
+Constants
+---------
 
 CDNURL = http://cdn.domain.tld
 
@@ -8,7 +10,8 @@ CDNURL = http://cdn.domain.tld
 CDNURL = https://sslcdn.domain.tld
 [global]
 
-configuration:
+configuration
+-------------
 
 config.nr_cdn.URL = {$CDNURL}
 
@@ -18,3 +21,23 @@ What won't go to your CDN:
 
 - thumbnails, cause this will be generated through Typo3s thump.php
 - class files, so you shouldn't have problems with java/website interactions coused by XSS
+
+PHP Konfiguration
+=================
+
+
+$GLOBALS['CDN_CONF_VARS'] = array(
+    // host name for CDN
+    'host' => 'cdn.example.org',
+
+    // whether to ignore leading slahes in given relacement paths
+    'ignoreslash' => true,
+
+    // paths to be replaced/prefixed with CDN host
+    'paths' => array(
+        'fileadmin',
+        'typo3temp',
+        'webcam',
+        'medien',
+    ),
+);
