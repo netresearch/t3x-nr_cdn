@@ -1,3 +1,6 @@
+2012-02-01 Sebastian Mendel <sebastian.mendel@netresearch.de>
+ * Version 0.10.0
+
 2012-01-27 Sebastian Mednel <sebastian.mendel@netresearch.de>
  * SDM-4961: make paths served from CDN configurable
  * SDM-4961: add an option to ignore leading slashes in pathes
