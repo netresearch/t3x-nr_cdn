@@ -1,5 +1,8 @@
+========================
 TypoScript Configuration
 ========================
+
+.. contents:: Inhaltsverzeichnis
 
 Constants
 ---------
