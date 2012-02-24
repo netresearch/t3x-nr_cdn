@@ -28,19 +28,20 @@ What won't go to your CDN:
 PHP Konfiguration
 =================
 
+::
 
-$GLOBALS['CDN_CONF_VARS'] = array(
-    // host name for CDN
-    'host' => 'cdn.example.org',
+    $GLOBALS['CDN_CONF_VARS'] = array(
+        // host name for CDN
+        'host' => 'cdn.example.org',
 
-    // whether to ignore leading slahes in given relacement paths
-    'ignoreslash' => true,
+        // whether to ignore leading slahes in given relacement paths
+        'ignoreslash' => true,
 
-    // paths to be replaced/prefixed with CDN host
-    'paths' => array(
-        'fileadmin',
-        'typo3temp',
-        'webcam',
-        'medien',
-    ),
-);
+        // paths to be replaced/prefixed with CDN host
+        'paths' => array(
+            'fileadmin',
+            'typo3temp',
+            'webcam',
+            'medien',
+        ),
+    );
