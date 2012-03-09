@@ -18,17 +18,17 @@ class Netresearch_Cdn
     /**
      * @var array configured paths served from CDN
      */
-    static $arPaths = null;
+    static protected $arPaths = null;
 
     /**
      * @var array path replacement regex patterns, for use on URLs
      */
-    static $arPathReplacements = null;
+    static protected $arPathReplacements = null;
 
     /**
      * @var array path replacement regex patterns, for use in mixed HTML content
      */
-    static $arContentReplacements = null;
+    static protected $arContentReplacements = null;
 
 
 
@@ -44,7 +44,7 @@ class Netresearch_Cdn
         }
 
         if (empty($GLOBALS['CDN_CONF_VARS']['paths'])) {
-            static::$arPaths = array('fileadmin/');
+            static::$arPaths = array('fileadmin/' => null);
             return static::$arPaths;
         }
 
@@ -55,7 +55,7 @@ class Netresearch_Cdn
         }
 
         if (static::ignoreSlash()) {
-            foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath => $arFileExtension) {
+            foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath => $arFileExtensions) {
                 static::$arPaths['/' . $strPath  . '/'] = $arFileExtensions;
             }
         }
@@ -94,7 +94,7 @@ class Netresearch_Cdn
      *
      * @return array
      */
-    protected function getContentReplacments()
+    protected function getContentReplacements()
     {
         if (null !== static::$arContentReplacements) {
             return static::$arContentReplacements;
@@ -169,7 +169,7 @@ class Netresearch_Cdn
         $strUrl = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
 
         $strContent = preg_replace(
-            static::getContentReplacments(), '"' . $strUrl . '\\1', $strContent
+            static::getContentReplacements(), '"' . $strUrl . '\\1', $strContent
         );
 
         return $strContent;
