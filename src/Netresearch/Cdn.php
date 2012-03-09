@@ -50,13 +50,13 @@ class Netresearch_Cdn
 
         static::$arPaths = array();
 
-        foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath) {
-            static::$arPaths[] = $strPath  . '/';
+        foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath => $arFileExtensions) {
+            static::$arPaths[$strPath  . '/'] = $arFileExtensions;
         }
 
         if (static::ignoreSlash()) {
-            foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath) {
-                static::$arPaths[] = '/' . $strPath  . '/';
+            foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath => $arFileExtension) {
+                static::$arPaths['/' . $strPath  . '/'] = $arFileExtensions;
             }
         }
 
@@ -76,8 +76,12 @@ class Netresearch_Cdn
             return static::$arPathReplacements;
         }
 
-        foreach (static::getPaths() as $strPath) {
-            static::$arPathReplacements[] = '/^(' . preg_quote($strPath, '/') . ')/';
+        foreach (static::getPaths() as $strPath => $arFileExtension) {
+            $strPathReg = preg_quote($strPath, '/');
+            if (null !== $arFileExtension) {
+                $strPathReg .= '.*(' . implode('|', $arFileExtension) . ')$';
+            }
+            static::$arPathReplacements[] = '/^(' . $strPathReg . ')/';
         }
 
         return static::$arPathReplacements;
@@ -96,8 +100,12 @@ class Netresearch_Cdn
             return static::$arContentReplacements;
         }
 
-        foreach (static::getPaths() as $strPath) {
-            static::$arContentReplacements[] = '/\\"(' . preg_quote($strPath, '/') . ')/';
+        foreach (static::getPaths() as $strPath => $arFileExtension) {
+            $strPathReg = preg_quote($strPath, '/');
+            if (null !== $arFileExtension) {
+                $strPathReg .= '[.^\\"]*[' . implode('|', $arFileExtension) . ']\\"';
+            }
+            static::$arContentReplacements[] = '/\\"(' . $strPathReg . ')/';
         }
 
         return static::$arContentReplacements;
@@ -136,12 +144,9 @@ class Netresearch_Cdn
         }
 
         $strUrl = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
-
-        $strFileName = preg_replace(
+        return preg_replace(
             static::getPathReplacements(), $strUrl . '\\1', $strFileName
         );
-
-        return $strFileName;
     }
 
 
