@@ -18,21 +18,34 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
 
     public function testRenderPreProcess()
     {
+        $GLOBALS['CDN_CONF_VARS']['paths'] = array(
+            'fileadmin' => null,
+            'typo3conf' => array('.jpg', '.js'),
+        );
+
         $arJsLibs = array(
             'inFileadmin' => array('file' => 'fileadmin/bla'),
             'inTypo3temp' => array('file' => 'other/bla'),
+            'inTypo3confRight' => array('file' => 'typo3conf/image.jpg'),
+            'inTypo3confWrong' => array('file' => 'typo3conf/ext/my_ext/ajax.php?abc=ajax.js'),
         );
         $arJsFiles = array(
             'fileadmin/bla1' => array(),
             'other/bla1' => array(),
+            'typo3conf/image.jpg' => array(),
+            'typo3conf/ext/my_ext/ajax.php?abc=ajax.js' => array(),
         );
         $arJsFooterFiles = array(
             'fileadmin/bla2' => array(),
             'other/bla2' => array(),
+            'typo3conf/image.jpg' => array(),
+            'typo3conf/ext/my_ext/ajax.php?abc=ajax.js' => array(),
         );
         $arCssFiles = array(
             'fileadmin/bla3' => array(),
             'other/bla3' => array(),
+            'typo3conf/image.jpg' => array(),
+            'typo3conf/ext/my_ext/ajax.php?abc=ajax.js' => array(),
         );
         $class = new user_t3libpagerenderer();
         $arTest = array(
@@ -45,18 +58,28 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         $class->renderPreProcess($arTest, null);
 
         $this->assertSame(
-            $arTest['jsLibs']['inFileadmin']['file'],
             'UnittestUrl/fileadmin/bla',
+            $arTest['jsLibs']['inFileadmin']['file'],
             '"fileadmin/" path must be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
-            $arTest['jsLibs']['inTypo3temp']['file'],
             'other/bla',
-            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            $arTest['jsLibs']['inTypo3temp']['file'],
+            '"other/" path must not be prefixed with "UnittestUrl/"'
+        );
+        $this->assertSame(
+            'UnittestUrl/typo3conf/image.jpg',
+            $arTest['jsLibs']['inTypo3confRight']['file'],
+            '"typo3conf/image.jpg" path must be prefixed with "UnittestUrl/"'
+        );
+        $this->assertSame(
+            'typo3conf/ext/my_ext/ajax.php?abc=ajax.js',
+            $arTest['jsLibs']['inTypo3confWrong']['file'],
+            '"typo3conf/ajax.php?abc=ajax.js" path must not be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
             count($arTest['jsLibs']),
-            2,
+            4,
             'There should be only 2 elements'
         );
 
@@ -66,11 +89,19 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         );
         $this->assertTrue(
             isset($arTest['jsFiles']['other/bla1']),
-            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            '"other/" path must not be prefixed with "UnittestUrl/"'
+        );
+        $this->assertTrue(
+            isset($arTest['jsFiles']['UnittestUrl/typo3conf/image.jpg']),
+            '"typo3conf/image.jpg" path must be prefixed with "UnittestUrl/"'
+        );
+        $this->assertTrue(
+            isset($arTest['jsFiles']['typo3conf/ext/my_ext/ajax.php?abc=ajax.js']),
+            '"typo3conf/ajax.php?abc=ajax.js" path must not be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
             count($arTest['jsFiles']),
-            2,
+            4,
             'There should be only 2 elements'
         );
 
@@ -80,11 +111,19 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         );
         $this->assertTrue(
             isset($arTest['jsFooterFiles']['other/bla2']),
-            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            '"other/" path must not be prefixed with "UnittestUrl/"'
+        );
+        $this->assertTrue(
+            isset($arTest['jsFooterFiles']['UnittestUrl/typo3conf/image.jpg']),
+            '"typo3conf/image.jpg" path must be prefixed with "UnittestUrl/"'
+        );
+        $this->assertTrue(
+            isset($arTest['jsFooterFiles']['typo3conf/ext/my_ext/ajax.php?abc=ajax.js']),
+            '"typo3conf/ajax.php?abc=ajax.js" path must not be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
             count($arTest['jsFooterFiles']),
-            2,
+            4,
             'There should be only 2 elements'
         );
 
@@ -94,11 +133,19 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         );
         $this->assertTrue(
             isset($arTest['cssFiles']['other/bla3']),
-            '"fileadmin/" path must be prefixed with "UnittestUrl/"'
+            '"other/" path must not be prefixed with "UnittestUrl/"'
+        );
+        $this->assertTrue(
+            isset($arTest['cssFiles']['UnittestUrl/typo3conf/image.jpg']),
+            '"typo3conf/image.jpg" path must be prefixed with "UnittestUrl/"'
+        );
+        $this->assertTrue(
+            isset($arTest['cssFiles']['typo3conf/ext/my_ext/ajax.php?abc=ajax.js']),
+            '"typo3conf/ajax.php?abc=ajax.js" path must not be prefixed with "UnittestUrl/"'
         );
         $this->assertSame(
             count($arTest['cssFiles']),
-            2,
+            4,
             'There should be only 2 elements'
         );
     }
