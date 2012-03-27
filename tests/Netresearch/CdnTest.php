@@ -158,7 +158,7 @@ class Netresearch_CdnTest
         $this->assertSame(
             array (
                 0 => '/^(Test1\/)/',
-                1 => '/^(Test2\/.*(.abc|.def)$)/',
+                1 => '/^(Test2\/[^?]*(.abc|.def)$)/',
                 2 => '/^(Test3\/)/',
             ),
             $arResult,
@@ -201,7 +201,7 @@ class Netresearch_CdnTest
         $this->assertSame(
             array (
                 0 => '/\"(Test1\/)/',
-                1 => '/\"(Test2\/[.^\"]*[.abc|.def]\")/',
+                1 => '/\"(Test2\/[^?^"]*[.abc|.def]\")/',
                 2 => '/\"(Test3\/)/',
             ),
             $arResult,

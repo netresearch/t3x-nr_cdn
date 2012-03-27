@@ -80,7 +80,7 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         $this->assertSame(
             count($arTest['jsLibs']),
             4,
-            'There should be only 2 elements'
+            'There should be only 4 elements'
         );
 
         $this->assertTrue(
@@ -102,7 +102,7 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         $this->assertSame(
             count($arTest['jsFiles']),
             4,
-            'There should be only 2 elements'
+            'There should be only 4 elements'
         );
 
         $this->assertTrue(
@@ -124,7 +124,7 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         $this->assertSame(
             count($arTest['jsFooterFiles']),
             4,
-            'There should be only 2 elements'
+            'There should be only 4 elements'
         );
 
         $this->assertTrue(
@@ -146,7 +146,7 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         $this->assertSame(
             count($arTest['cssFiles']),
             4,
-            'There should be only 2 elements'
+            'There should be only 4 elements'
         );
     }
 }

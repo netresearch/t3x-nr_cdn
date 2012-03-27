@@ -79,7 +79,7 @@ class Netresearch_Cdn
         foreach (static::getPaths() as $strPath => $arFileExtension) {
             $strPathReg = preg_quote($strPath, '/');
             if (null !== $arFileExtension) {
-                $strPathReg .= '.*(' . implode('|', $arFileExtension) . ')$';
+                $strPathReg .= '[^?]*(' . implode('|', $arFileExtension) . ')$';
             }
             static::$arPathReplacements[] = '/^(' . $strPathReg . ')/';
         }
@@ -103,7 +103,7 @@ class Netresearch_Cdn
         foreach (static::getPaths() as $strPath => $arFileExtension) {
             $strPathReg = preg_quote($strPath, '/');
             if (null !== $arFileExtension) {
-                $strPathReg .= '[.^\\"]*[' . implode('|', $arFileExtension) . ']\\"';
+                $strPathReg .= '[^?^"]*[' . implode('|', $arFileExtension) . ']\\"';
             }
             static::$arContentReplacements[] = '/\\"(' . $strPathReg . ')/';
         }
