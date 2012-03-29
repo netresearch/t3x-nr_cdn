@@ -25,6 +25,7 @@ class ux_ux_tslib_fe extends ux_tslib_fe
     function INTincScript()    
     {
         // Deprecated stuff:
+        // @deprecated: annotation added TYPO3 4.6
         $this->additionalHeaderData 
             = is_array($this->config['INTincScript_ext']['additionalHeaderData']) 
             ? $this->config['INTincScript_ext']['additionalHeaderData'] 
@@ -32,7 +33,6 @@ class ux_ux_tslib_fe extends ux_tslib_fe
         $this->additionalJavaScript 
             = $this->config['INTincScript_ext']['additionalJavaScript'];
         $this->additionalCSS = $this->config['INTincScript_ext']['additionalCSS'];
-        $this->JSCode = $this->additionalHeaderData['JSCode'];
         $this->JSImgCode = $this->additionalHeaderData['JSImgCode'];
         $this->divSection = '';
 
@@ -42,10 +42,10 @@ class ux_ux_tslib_fe extends ux_tslib_fe
             $this->INTincScript_process($INTiS_config);
             // Check if there were new items added to INTincScript during the
             // previous execution:
-            $INTiS_config 
+            $INTiS_config
                 = array_diff_assoc($this->config['INTincScript'], $INTiS_config);
-            $reprocess = (count($INTiS_config) ? true : false);
-        } while ($reprocess);
+            $reprocess = (count($INTiS_config) ? TRUE : FALSE);
+        } while($reprocess);
 
         $GLOBALS['TT']->push('Substitute header section');
         $this->INTincScript_loadJSCode();
@@ -78,7 +78,7 @@ class ux_ux_tslib_fe extends ux_tslib_fe
         if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
             return;
         }
-        
+
         foreach ($this->additionalHeaderData as $strKey => $strContent) {
             $this->additionalHeaderData[$strKey] 
                 = Netresearch_Cdn::addCdnPrefix($strContent);
