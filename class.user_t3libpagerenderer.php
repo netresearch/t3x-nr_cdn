@@ -57,6 +57,7 @@ class user_t3libpagerenderer
                     $strFileNameNew = Netresearch_Cdn::addHost($strFileName);
                     unset($arParams[$strToProcess][$strFileName]);
                     $arParamsProcess[$strFileNameNew] = $arConfig;
+                    $arParamsProcess[$strFileNameNew]['file'] = $strFileNameNew;
                 }
             }
             $arParams[$strToProcess] = $arParamsProcess;
