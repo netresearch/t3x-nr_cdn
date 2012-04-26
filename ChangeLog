@@ -1,6 +1,9 @@
 2012-04-26 Sebastian Mendel <sebastian.mendel@netresearch.de>
  * Version: 0.11.0
 
+2012-04-26 Sebastian Mendel <sebastian.mendel@netresearch.de>
+ * Version: 0.11.0
+
 2012-03-28 Alexander Opitz <alexander.opitz@netresearch.de>
  * SDM-9944: Update to typo46 INTincScript
  * SDM-9944: Fix API change in Typo46
