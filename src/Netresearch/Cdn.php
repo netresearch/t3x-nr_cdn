@@ -54,12 +54,6 @@ class Netresearch_Cdn
             static::$arPaths[$strPath  . '/'] = $arFileExtensions;
         }
 
-        if (static::ignoreSlash()) {
-            foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath => $arFileExtensions) {
-                static::$arPaths['/' . $strPath  . '/'] = $arFileExtensions;
-            }
-        }
-
         return static::$arPaths;
     }
 
@@ -77,11 +71,18 @@ class Netresearch_Cdn
         }
 
         foreach (static::getPaths() as $strPath => $arFileExtension) {
-            $strPathReg = preg_quote($strPath, '/');
-            if (null !== $arFileExtension) {
-                $strPathReg .= '[^?]*(' . implode('|', $arFileExtension) . ')$';
+            $strPathReg = '/^';
+            if (static::ignoreSlash()) {
+                $strPathReg .= '\\/?';
             }
-            static::$arPathReplacements[] = '/^(' . $strPathReg . ')/';
+            $strPathReg .= '(';
+            $strPathReg .= preg_quote($strPath, '/');
+            $strPathReg .= '[^?]*';
+            if (null !== $arFileExtension) {
+                $strPathReg .= '(' . implode('|', $arFileExtension) . ')';
+            }
+            $strPathReg .= '$)/';
+            static::$arPathReplacements[] = $strPathReg;
         }
 
         return static::$arPathReplacements;
@@ -101,11 +102,22 @@ class Netresearch_Cdn
         }
 
         foreach (static::getPaths() as $strPath => $arFileExtension) {
-            $strPathReg = preg_quote($strPath, '/');
-            if (null !== $arFileExtension) {
-                $strPathReg .= '[^?^"]*[' . implode('|', $arFileExtension) . ']\\"';
+            $strPathReg = '/\\"';
+            if (static::ignoreSlash()) {
+                $strPathReg .= '\\/?';
             }
-            static::$arContentReplacements[] = '/\\"(' . $strPathReg . ')/';
+            $strPathReg .= '(';
+            $strPathReg .= preg_quote($strPath, '/');
+            $strPathReg .= '[^?"]*';
+            if (null !== $arFileExtension) {
+                array_walk(
+                    $arFileExtension,
+                    function (&$strExt) { $strExt = preg_quote($strExt, '/'); }
+                );
+                $strPathReg .= '(' . implode('|', $arFileExtension) . ')';
+            }
+            $strPathReg .= '\\")/';
+            static::$arContentReplacements[] = $strPathReg;
         }
 
         return static::$arContentReplacements;

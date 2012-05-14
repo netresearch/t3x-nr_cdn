@@ -22,13 +22,12 @@ class Netresearch_CdnTest
         $propStatic->setValue($cdn, null);
         $propStatic = $this->getAccessibleProperty('Netresearch_Cdn', 'arContentReplacements');
         $propStatic->setValue($cdn, null);
-        
-        $GLOBALS['CDN_CONF_VARS'] = $this->arConfig;
+
+        $GLOBALS['CDN_CONF_VARS'] = $this->arCdnConfig;
     }
 
     public function testGetPathsNoConfig()
     {
-        $arConfig = $GLOBALS['CDN_CONF_VARS']['paths'];
         unset($GLOBALS['CDN_CONF_VARS']['paths']);
 
         $cdn = new Netresearch_Cdn();
@@ -40,8 +39,6 @@ class Netresearch_CdnTest
             $arResult,
             'The default config, if nothing is configured'
         );
-
-        $GLOBALS['CDN_CONF_VARS']['paths'] = $arConfig;
     }
 
     public function testGetPathsStaticIfSet()
@@ -59,9 +56,8 @@ class Netresearch_CdnTest
         );
     }
 
-    public function testGetPathsFromConfIgnoreSlash()
+    public function testGetPathsFromConf()
     {
-        $arConfig = $GLOBALS['CDN_CONF_VARS'];
         $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = false;
         $GLOBALS['CDN_CONF_VARS']['paths'] = array(
             'Test1' => null,
@@ -85,44 +81,6 @@ class Netresearch_CdnTest
             $arResult,
             'The static var'
         );
-
-        $GLOBALS['CDN_CONF_VARS'] = $arConfig;
-    }
-
-    public function testGetPathsFromConfNonIgnoreSlash()
-    {
-        $arConfig = $GLOBALS['CDN_CONF_VARS'];
-        $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = true;
-        $GLOBALS['CDN_CONF_VARS']['paths'] = array(
-            'Test1' => null,
-            'Test2' => array('.abc', '.def'),
-            'Test3' => null,
-        );
-
-        $cdn = new Netresearch_Cdn();
-        $method = $this->getAccessibleMethod($cdn, 'getPaths');
-
-        $arResult = $method->invoke($cdn);
-        $this->assertSame(
-            array (
-                'Test1/' => null,
-                'Test2/' => array (
-                    0 => '.abc',
-                    1 => '.def',
-                ),
-                'Test3/' => null,
-                '/Test1/' => null,
-                '/Test2/' => array (
-                    0 => '.abc',
-                    1 => '.def',
-                ),
-                '/Test3/' => null,
-            ),
-            $arResult,
-            'The static var'
-        );
-
-        $GLOBALS['CDN_CONF_VARS'] = $arConfig;
     }
 
     public function testGetPathReplacmentsStaticIfSet()
@@ -143,7 +101,6 @@ class Netresearch_CdnTest
 
     public function testGetPathReplacments()
     {
-        $arConfig = $GLOBALS['CDN_CONF_VARS'];
         $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = false;
         $GLOBALS['CDN_CONF_VARS']['paths'] = array(
             'Test1' => null,
@@ -157,15 +114,13 @@ class Netresearch_CdnTest
         $arResult = $method->invoke($cdn);
         $this->assertSame(
             array (
-                0 => '/^(Test1\/)/',
+                0 => '/^(Test1\/[^?]*$)/',
                 1 => '/^(Test2\/[^?]*(.abc|.def)$)/',
-                2 => '/^(Test3\/)/',
+                2 => '/^(Test3\/[^?]*$)/',
             ),
             $arResult,
             'The static var'
         );
-
-        $GLOBALS['CDN_CONF_VARS'] = $arConfig;
     }
 
     public function testGetContentReplacementsStaticIfSet()
@@ -186,7 +141,6 @@ class Netresearch_CdnTest
 
     public function testGetContentReplacements()
     {
-        $arConfig = $GLOBALS['CDN_CONF_VARS'];
         $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = false;
         $GLOBALS['CDN_CONF_VARS']['paths'] = array(
             'Test1' => null,
@@ -200,14 +154,50 @@ class Netresearch_CdnTest
         $arResult = $method->invoke($cdn);
         $this->assertSame(
             array (
-                0 => '/\"(Test1\/)/',
-                1 => '/\"(Test2\/[^?^"]*[.abc|.def]\")/',
-                2 => '/\"(Test3\/)/',
+                0 => '/\"(Test1\/[^?"]*\")/',
+                1 => '/\"(Test2\/[^?"]*(\.abc|\.def)\")/',
+                2 => '/\"(Test3\/[^?"]*\")/',
             ),
             $arResult,
             'The static var'
         );
+    }
 
-        $GLOBALS['CDN_CONF_VARS'] = $arConfig;
+    public function testDoNotAddCdnPrefixForPhpFiles()
+    {
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']
+            = '//cdn.example.org/';
+
+        $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = true;
+        $GLOBALS['CDN_CONF_VARS']['paths'] = array(
+            'path' => array('.jpg', '.js'),
+            'foo'  => null,
+        );
+
+        $strContent = <<<EOT
+        This is an path to <img src="foo/To/image.jpg">
+        This is an path to <img src="/path/To/image.jpg?123">
+        This is an path to <img src="/path/To/image.jpg">
+        <script>
+        var image = "path/to/script.js";
+        var image = "/path/to/script.php";
+        var image = "not/to/script.jpg";
+        </script>
+EOT;
+
+        $strExpected = <<<EOT
+        This is an path to <img src="//cdn.example.org/foo/To/image.jpg">
+        This is an path to <img src="/path/To/image.jpg?123">
+        This is an path to <img src="//cdn.example.org/path/To/image.jpg">
+        <script>
+        var image = "//cdn.example.org/path/to/script.js";
+        var image = "/path/to/script.php";
+        var image = "not/to/script.jpg";
+        </script>
+EOT;
+
+        $strResult = Netresearch_Cdn::addCdnPrefix($strContent);
+
+        $this->assertSame($strExpected, $strResult);
     }
 }
