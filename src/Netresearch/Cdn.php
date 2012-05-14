@@ -167,7 +167,6 @@ class Netresearch_Cdn
         }
 
         $strUrl = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
-
         $strContent = preg_replace(
             static::getContentReplacements(), '"' . $strUrl . '\\1', $strContent
         );

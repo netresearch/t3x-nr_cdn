@@ -31,7 +31,7 @@ class ux_tslib_cObj extends tslib_cObj
      * Rendering the cObject, TEXT
      *
      * @param array $conf TypoScript properties
-     * 
+     *
      * @return string Output
      * @link http://typo3.org/doc.0.html?&tx_extrepmgm_pi1[extUid]=270&tx_extrepmgm_pi1[tocEl]=350&cHash=b49de28f83
      */
@@ -41,13 +41,13 @@ class ux_tslib_cObj extends tslib_cObj
     }
 
 
-    
+
     /**
      * Rendering the cObject, USER and USER_INT
      *
      * @param array  $conf TypoScript properties
      * @param string $ext  If "INT" then the cObject is a "USER_INT" (non-cached), otherwise just "USER" (cached)
-     * 
+     *
      * @return string Output
      * @link http://typo3.org/doc.0.html?&tx_extrepmgm_pi1[extUid]=270&tx_extrepmgm_pi1[tocEl]=369&cHash=b623aca0a9
      */
@@ -56,41 +56,41 @@ class ux_tslib_cObj extends tslib_cObj
         return Netresearch_Cdn::addCdnPrefix(parent::USER($conf, $ext));
     }
 
-    
+
 
     /**
      * Rendering the cObject, MULTIMEDIA
      *
      * @param array $conf TypoScript properties
-     * 
+     *
      * @return string Output
      * @link http://typo3.org/doc.0.html?&tx_extrepmgm_pi1[extUid]=270&tx_extrepmgm_pi1[tocEl]=374&cHash=efd88ab4a9
      */
-    function MULTIMEDIA($conf)    
+    function MULTIMEDIA($conf)
     {
         $restore = Netresearch_Cdn::setAbsRefPrefix();
 
         $content = parent::MULTIMEDIA($conf);
-        
+
         Netresearch_Cdn::setAbsRefPrefix($restore);
-        
+
         return $content;
     }
 
 
-    
+
     /**
      * Returns a <img> tag with the image file defined by $file and processed according to the properties in the TypoScript array.
      * Mostly this function is a sub-function to the IMAGE function which renders the IMAGE cObject in TypoScript. This function is called by "$this->cImage($conf['file'],$conf);" from IMAGE().
      *
      * @param string $file File TypoScript resource
      * @param array  $conf TypoScript configuration properties
-     * 
+     *
      * @return string <img> tag, (possibly wrapped in links and other HTML) if any image found.
      * @access private
      * @see IMAGE()
      */
-    function cImage($file, $conf) 
+    function cImage($file, $conf)
     {
         $info = $this->getImgResource($file, $conf['file.']);
         $bNeedAbsRefPrefix = ('fileadmin/' === substr($info[3], 0, 10));

@@ -59,13 +59,13 @@ class UxContentTest extends PHPUnit_Framework_TestCase
      */
     public function testTextMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
-    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
 
         $uxc = new ux_tslib_cObj();
         $uxc->__TEXT = '"fileadmin/';
         $this->assertSame(
-        	'"fileadmin/', $uxc->TEXT(array()),
-        	'"fileadmin/" path must be unchanged'
+            '"fileadmin/', $uxc->TEXT(array()),
+            '"fileadmin/" path must be unchanged'
         );
     }
 
@@ -75,13 +75,13 @@ class UxContentTest extends PHPUnit_Framework_TestCase
      */
     public function testTextMustNotAlterFileadminPathIfCdnUrlIsNotSet()
     {
-    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'] = array();
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'] = array();
 
         $uxc = new ux_tslib_cObj();
         $uxc->__TEXT = '"fileadmin/';
         $this->assertSame(
-        	'"fileadmin/', $uxc->TEXT(array()),
-        	'"fileadmin/" path must be unchanged'
+            '"fileadmin/', $uxc->TEXT(array()),
+            '"fileadmin/" path must be unchanged'
         );
     }
 
@@ -112,8 +112,8 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $uxc = new ux_tslib_cObj();
         $uxc->__USER = '"otherpath/';
         $this->assertSame(
-        	'"otherpath/', $uxc->USER(array()),
-        	'"otherpath/" path must not be prefixed with "UnittestUrl/"'
+            '"otherpath/', $uxc->USER(array()),
+            '"otherpath/" path must not be prefixed with "UnittestUrl/"'
         );
     }
 
@@ -123,13 +123,13 @@ class UxContentTest extends PHPUnit_Framework_TestCase
      */
     public function testUserMustNotAlterFileadminPathIfEmptyCdnUrl()
     {
-    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
 
         $uxc = new ux_tslib_cObj();
         $uxc->__USER = '"fileadmin/';
         $this->assertSame(
-        	'"fileadmin/', $uxc->USER(array()),
-        	'"fileadmin/" path must be unchanged'
+            '"fileadmin/', $uxc->USER(array()),
+            '"fileadmin/" path must be unchanged'
         );
     }
 
@@ -139,13 +139,13 @@ class UxContentTest extends PHPUnit_Framework_TestCase
      */
     public function testUserMustNotAlterFileadminPathIfCdnUrlIsNotSet()
     {
-    	$GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'] = array();
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'] = array();
 
         $uxc = new ux_tslib_cObj();
         $uxc->__USER = '"fileadmin/';
         $this->assertSame(
-        	'"fileadmin/', $uxc->USER(array()),
-        	'"fileadmin/" path must be unchanged'
+            '"fileadmin/', $uxc->USER(array()),
+            '"fileadmin/" path must be unchanged'
         );
     }
 
@@ -161,13 +161,13 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $ret = $uxc->MULTIMEDIA(array());
 
         $this->assertSame(
-        	'unittest_path/', $uxc->testUrlBefore,
-        	'"$GLOBALS[\'TSFE\']->absRefPrefix" must be same as nr_cdn.URL when parent::MULTIMEDIA() is invoked.'
+            'unittest_path/', $uxc->testUrlBefore,
+            '"$GLOBALS[\'TSFE\']->absRefPrefix" must be same as nr_cdn.URL when parent::MULTIMEDIA() is invoked.'
         );
 
         $this->assertSame(
-        	'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
-        	'"$GLOBALS[\'TSFE\']->absRefPrefix" must be restored or same as before method invocation.'
+            'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
+            '"$GLOBALS[\'TSFE\']->absRefPrefix" must be restored or same as before method invocation.'
         );
     }
 
@@ -182,13 +182,13 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $ret = $uxc->MULTIMEDIA(array());
         $testUrlBefore = $uxc->testUrlBefore;
         $this->assertSame(
-        	'UNITTEST', $testUrlBefore,
-        	'absRefPrefix must not be altered, cause CDN URL is empty'
+            'UNITTEST', $testUrlBefore,
+            'absRefPrefix must not be altered, cause CDN URL is empty'
         );
 
         $this->assertSame(
-        	'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
-        	'absRefPrefix must have same value as before calling MULTIMEDIA()'
+            'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
+            'absRefPrefix must have same value as before calling MULTIMEDIA()'
         );
     }
 
@@ -211,12 +211,12 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $ucx->cImage('', array());
         $testUrlBefore = $ucx->testUrlBefore;
         $this->assertSame(
-        	'ext', $testUrlBefore,
-        	'absRefPrefix must be altered to CDN URL'
+            'ext', $testUrlBefore,
+            'absRefPrefix must be altered to CDN URL'
         );
         $this->assertSame(
-        	'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
-        	'absRefPrefix must have same value as before calling MULTIMEDIA()'
+            'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
+            'absRefPrefix must have same value as before calling MULTIMEDIA()'
         );
     }
 
@@ -239,12 +239,12 @@ class UxContentTest extends PHPUnit_Framework_TestCase
         $ucx->cImage('', array());
         $testUrlBefore = $ucx->testUrlBefore;
         $this->assertSame(
-        	'UNITTEST', $testUrlBefore,
-        	'absRefPrefix must be original'
+            'UNITTEST', $testUrlBefore,
+            'absRefPrefix must be original'
         );
         $this->assertSame(
-        	'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
-        	'absRefPrefix must have same value as before calling MULTIMEDIA()'
+            'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
+            'absRefPrefix must have same value as before calling MULTIMEDIA()'
         );
     }
 
