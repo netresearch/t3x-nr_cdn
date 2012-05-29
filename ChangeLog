@@ -1,3 +1,6 @@
+2012-05-29 Sebastian Mendel <sebastian.mendel@netresearch.de>
+ * Version: 0.12.0
+
 2012-05-14 Sebastian Mendel <sebastian.mendel@netresearch.de>
  * SDM-10717: fix file allow pattern handling for CDN URL rewriting
               this fixes URLs to PHP-scripts rewritten with CDN prefix
