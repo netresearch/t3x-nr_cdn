@@ -9,27 +9,23 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Configuration
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.aida.de AIDA Copyright
+ * @license    http://www.netresearch.de Netresearch
  * @link       http://www.netresearch.de
  */
 
+$strExtPath = t3lib_extMgm::extPath('nr_cdn');
+
 return array(
-    'Netresearch_Cdn' => t3lib_extMgm::extPath(
-        'nr_cdn', 'src/Netresearch/Cdn.php'
-    ),
-    'Netresearch_Cdn_HookCssFilelinksGetFileUrl' => t3lib_extMgm::extPath(
-        'nr_cdn', 'src/Netresearch/Cdn/HookCssFilelinksGetFileUrl.php'
-    ),
-    'tx_Netresearch_Cdn_HookCssFilelinksGetFileUrl' => t3lib_extMgm::extPath(
-        'nr_cdn', 'src/Netresearch/Cdn/HookCssFilelinksGetFileUrl.php'
-    ),
-    'user_t3libpagerenderer' => t3lib_extMgm::extPath(
-        'nr_cdn', 'class.user_t3libpagerenderer.php'
-    ),
-    'ux_tslib_cObj' => t3lib_extMgm::extPath(
-        'nr_cdn', 'class.ux_tslib_content.php'
-    ),
-    'ux_ux_tslib_fe' => t3lib_extMgm::extPath(
-        'nr_cdn', 'class.ux_tslib_fe.php'
-    ),
+    'netresearch_cdn'
+        => $strExtPath . 'src/Netresearch/Cdn.php',
+    'netresearch_cdn_hookcssfilelinksgetfileurl'
+        => $strExtPath . 'src/Netresearch/Cdn/HookCssFilelinksGetFileUrl.php',
+    'tx_netresearch_cdn_hookcssfilelinksgetfileurl'
+        => $strExtPath . 'src/Netresearch/Cdn/HookCssFilelinksGetFileUrl.php',
+    'user_t3libpagerenderer'
+        => $strExtPath . 'class.user_t3libpagerenderer.php',
+    'ux_tslib_cobj'
+        => $strExtPath . 'class.ux_tslib_content.php',
+    'ux_ux_tslib_fe'
+        => $strExtPath . 'class.ux_tslib_fe.php',
 );
