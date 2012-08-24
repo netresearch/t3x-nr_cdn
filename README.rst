@@ -1,8 +1,24 @@
-========================
-TypoScript Configuration
-========================
+Netresearch Content Delivery Network Tools
+==========================================
 
 .. contents:: Inhaltsverzeichnis
+
+What does it do
+===============
+
+This extension will link satic media in your page to your Contetn Delivery Network
+or just any other static server for media like.
+
+http://en.wikipedia.org/wiki/Content_delivery_network
+
+So you can use your full featured CDN to deliver content to your customers faster
+and offload traffic from your CMS servers or just use some lightweight fast
+http server like lighttpd.
+
+nr_cdn will rewrite URLs to static files in served pages e. g.:
+
+- /fileadmin/upload/image.jpg => //cdn.example.org/fileadmin/upload/image.jpg
+- /typo3conf/ext/my_ext/res/style.css => //cdn.example.org/typo3conf/ext/my_ext/res/style.css
 
 TypoScript Configuration
 ========================
