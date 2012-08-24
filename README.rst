@@ -22,7 +22,7 @@ Don't forget to clear the cache afterwards.
 
 What won't go to your CDN:
 
-- thumbnails, cause this will be generated through Typo3s thump.php
+- thumbnails, cause this will be generated through TYPO3s thump.php
 - class files, so you shouldn't have problems with java/website interactions coused by XSS
 
 PHP Konfiguration
