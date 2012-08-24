@@ -1,3 +1,7 @@
+2012-08-24  Sebastian Mendel  <sebastian.mendel@netresearch.de>
+
+    * Add autoloader configuration
+
 2012-05-29  Sebastian Mendel  <sebastian.mendel@netresearch.de>
 
     * Version: 0.12.0
