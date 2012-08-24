@@ -25,6 +25,16 @@ if (t3lib_extMgm::isLoaded('obts')) {
     require_once t3lib_extMgm::extPath('obts', '_tsobject/_tso.php');
 }
 
+/**
+ * Extends tslib_cObj for manipulating links refering to CDN host.
+ *
+ * @category   Netresearch
+ * @package    CDN
+ * @subpackage Controller
+ * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
+ * @license    http://www.netresearch.de Netresearch
+ * @link       http://www.netresearch.de
+ */
 class ux_tslib_cObj extends tslib_cObj
 {
     /**
@@ -33,7 +43,6 @@ class ux_tslib_cObj extends tslib_cObj
      * @param array $conf TypoScript properties
      *
      * @return string Output
-     * @link http://typo3.org/doc.0.html?&tx_extrepmgm_pi1[extUid]=270&tx_extrepmgm_pi1[tocEl]=350&cHash=b49de28f83
      */
     function TEXT($conf)
     {
@@ -46,10 +55,10 @@ class ux_tslib_cObj extends tslib_cObj
      * Rendering the cObject, USER and USER_INT
      *
      * @param array  $conf TypoScript properties
-     * @param string $ext  If "INT" then the cObject is a "USER_INT" (non-cached), otherwise just "USER" (cached)
+     * @param string $ext  If "INT" then the cObject is a "USER_INT" (non-cached),
+     *                     otherwise just "USER" (cached)
      *
      * @return string Output
-     * @link http://typo3.org/doc.0.html?&tx_extrepmgm_pi1[extUid]=270&tx_extrepmgm_pi1[tocEl]=369&cHash=b623aca0a9
      */
     function USER($conf, $ext = '')
     {
@@ -64,7 +73,6 @@ class ux_tslib_cObj extends tslib_cObj
      * @param array $conf TypoScript properties
      *
      * @return string Output
-     * @link http://typo3.org/doc.0.html?&tx_extrepmgm_pi1[extUid]=270&tx_extrepmgm_pi1[tocEl]=374&cHash=efd88ab4a9
      */
     function MULTIMEDIA($conf)
     {
@@ -80,13 +88,17 @@ class ux_tslib_cObj extends tslib_cObj
 
 
     /**
-     * Returns a <img> tag with the image file defined by $file and processed according to the properties in the TypoScript array.
-     * Mostly this function is a sub-function to the IMAGE function which renders the IMAGE cObject in TypoScript. This function is called by "$this->cImage($conf['file'],$conf);" from IMAGE().
+     * Returns a <img> tag with the image file defined by $file and processed
+     * according to the properties in the TypoScript array.
+     * Mostly this function is a sub-function to the IMAGE function which renders
+     * the IMAGE cObject in TypoScript. This function is called by
+     * "$this->cImage($conf['file'],$conf);" from IMAGE().
      *
      * @param string $file File TypoScript resource
      * @param array  $conf TypoScript configuration properties
      *
-     * @return string <img> tag, (possibly wrapped in links and other HTML) if any image found.
+     * @return string <img> tag, (possibly wrapped in links and other HTML) if
+     *                any image found.
      * @access private
      * @see IMAGE()
      */
@@ -112,4 +124,3 @@ class ux_tslib_cObj extends tslib_cObj
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_content.php'])    {
     include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_content.php']);
 }
-?>

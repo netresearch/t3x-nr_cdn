@@ -1,18 +1,28 @@
 <?php
 declare(encoding = 'UTF-8');
 /**
- * Extension config script
+ * Class file.
  *
  * PHP version 5
  *
  * @category   Netresearch
  * @package    CDN
- * @subpackage Hook
+ * @subpackage Helper
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
  * @license    http://www.netresearch.de Netresearch
  * @link       http://www.netresearch.de
  */
 
+/**
+ * Library/Helper class für CDN.
+ *
+ * @category   Netresearch
+ * @package    CDN
+ * @subpackage Helper
+ * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
+ * @license    http://www.netresearch.de Netresearch
+ * @link       http://www.netresearch.de
+ */
 class Netresearch_Cdn
 {
     /**
@@ -112,7 +122,9 @@ class Netresearch_Cdn
             if (null !== $arFileExtension) {
                 array_walk(
                     $arFileExtension,
-                    function (&$strExt) { $strExt = preg_quote($strExt, '/'); }
+                    function (&$strExt) {
+                        $strExt = preg_quote($strExt, '/');
+                    }
                 );
                 $strPathReg .= '(' . implode('|', $arFileExtension) . ')';
             }
@@ -216,5 +228,3 @@ class Netresearch_Cdn
         return $restore;
     }
 }
-
-?>

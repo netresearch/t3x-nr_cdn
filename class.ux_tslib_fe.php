@@ -13,8 +13,21 @@ declare(encoding = 'UTF-8');
  * @link       http://www.netresearch.de
  */
 
-require_once PATH_typo3 . 'sysext/cms/tslib/class.tslib_fe.php';
+/**
+ *
+ */
+require_once PATH_tslib . 'class.tslib_fe.php';
 
+/**
+ * Extends tslib_fe for manipulatnig links refering to CDN host.
+ *
+ * @category   Netresearch
+ * @package    CDN
+ * @subpackage Controller
+ * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
+ * @license    http://www.netresearch.de Netresearch
+ * @link       http://www.netresearch.de
+ */
 class ux_tslib_fe extends tslib_fe
 {
     /**
@@ -44,8 +57,8 @@ class ux_tslib_fe extends tslib_fe
             // previous execution:
             $INTiS_config
                 = array_diff_assoc($this->config['INTincScript'], $INTiS_config);
-            $reprocess = (count($INTiS_config) ? TRUE : FALSE);
-        } while($reprocess);
+            $reprocess = (count($INTiS_config) ? true : false);
+        } while ($reprocess);
 
         $GLOBALS['TT']->push('Substitute header section');
         $this->INTincScript_loadJSCode();
