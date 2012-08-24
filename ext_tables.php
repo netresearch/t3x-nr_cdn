@@ -18,6 +18,4 @@ declare(encoding = 'UTF-8');
  */
 defined('TYPO3_MODE') or die('Access denied.');
 
-t3lib_extMgm::addStaticFile(
-    $_EXTKEY, "static", "NR CDN Setup"
-);
+t3lib_extMgm::addStaticFile($_EXTKEY, 'static/', 'NR CDN Setup');
