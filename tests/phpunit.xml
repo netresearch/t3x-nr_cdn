@@ -6,6 +6,10 @@
       <directory suffix=".php">../</directory>
       <exclude>
         <directory suffix=".php">../tests</directory>
+        <file>../ext_localconf.php</file>
+        <file>../ext_autoload.php</file>
+        <file>../ext_emconf.php</file>
+        <file>../ext_tables.php</file>
       </exclude>
     </whitelist>
   </filter>
