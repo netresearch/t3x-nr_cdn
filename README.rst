@@ -4,19 +4,25 @@ TypoScript Configuration
 
 .. contents:: Inhaltsverzeichnis
 
+TypoScript Configuration
+========================
+
 Constants
 ---------
 
-CDNURL = http://cdn.domain.tld
+::
 
-[globalString = _SERVER|HTTPS=on]
-CDNURL = https://sslcdn.domain.tld
-[global]
+    CDNURL = //cdn.domain.tld
 
-configuration
--------------
+Setup
+-----
 
-config.nr_cdn.URL = {$CDNURL}
+::
+
+    config.nr_cdn.URL = {$CDNURL}
+
+Note
+----
 
 Don't forget to clear the cache afterwards.
 
@@ -39,9 +45,8 @@ PHP Konfiguration
 
         // paths to be replaced/prefixed with CDN host
         'paths' => array(
-            'fileadmin',
-            'typo3temp',
-            'webcam',
-            'medien',
+            'fileadmin' => null, // every file
+            'typo3temp' => null, // every file
+            'typo3conf' => array('.js', '.png', '.gif', '.jpg'), // only static files
         ),
     );
