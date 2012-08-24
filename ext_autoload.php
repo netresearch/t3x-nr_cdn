@@ -26,6 +26,6 @@ return array(
         => $strExtPath . 'class.user_t3libpagerenderer.php',
     'ux_tslib_cobj'
         => $strExtPath . 'class.ux_tslib_content.php',
-    'ux_ux_tslib_fe'
+    'ux_tslib_fe'
         => $strExtPath . 'class.ux_tslib_fe.php',
 );

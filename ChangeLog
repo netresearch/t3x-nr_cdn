@@ -2,6 +2,8 @@
 
     * Add autoloader configuration
 
+    * rename ux_ux_tslib_fe to ux_tslib_fe
+
 2012-05-29  Sebastian Mendel  <sebastian.mendel@netresearch.de>
 
     * Version: 0.12.0

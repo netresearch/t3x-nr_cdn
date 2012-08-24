@@ -13,24 +13,24 @@ declare(encoding = 'UTF-8');
  * @link       http://www.netresearch.de
  */
 
-require_once PATH_site . 'typo3conf/ext/aida_common/ux/class.ux_tslib_fe.php';
+require_once PATH_typo3 . 'sysext/cms/tslib/class.tslib_fe.php';
 
-class ux_ux_tslib_fe extends ux_tslib_fe
+class ux_tslib_fe extends tslib_fe
 {
     /**
      * Processes the INTinclude-scripts
      *
      * @return void
      */
-    function INTincScript()    
+    function INTincScript()
     {
         // Deprecated stuff:
         // @deprecated: annotation added TYPO3 4.6
-        $this->additionalHeaderData 
-            = is_array($this->config['INTincScript_ext']['additionalHeaderData']) 
-            ? $this->config['INTincScript_ext']['additionalHeaderData'] 
+        $this->additionalHeaderData
+            = is_array($this->config['INTincScript_ext']['additionalHeaderData'])
+            ? $this->config['INTincScript_ext']['additionalHeaderData']
             : array();
-        $this->additionalJavaScript 
+        $this->additionalJavaScript
             = $this->config['INTincScript_ext']['additionalJavaScript'];
         $this->additionalCSS = $this->config['INTincScript_ext']['additionalCSS'];
         $this->JSImgCode = $this->additionalHeaderData['JSImgCode'];
@@ -51,26 +51,26 @@ class ux_ux_tslib_fe extends ux_tslib_fe
         $this->INTincScript_loadJSCode();
         $this->replaceHeaderData();
         $this->content = str_replace(
-            '<!--HD_' . $this->config['INTincScript_ext']['divKey'] . '-->', 
+            '<!--HD_' . $this->config['INTincScript_ext']['divKey'] . '-->',
             $this->convOutputCharset(
                 implode(chr(10), $this->additionalHeaderData), 'HD'
-            ), 
+            ),
             $this->content
         );
         $this->content = str_replace(
-            '<!--TDS_' . $this->config['INTincScript_ext']['divKey'] . '-->', 
-            $this->convOutputCharset($this->divSection, 'TDS'), 
+            '<!--TDS_' . $this->config['INTincScript_ext']['divKey'] . '-->',
+            $this->convOutputCharset($this->divSection, 'TDS'),
             $this->content
         );
         $this->setAbsRefPrefix();
         $GLOBALS['TT']->pull();
     }
 
-    
-    
+
+
     /**
      * Prepends CDN URL to page header data links.
-     * 
+     *
      * @return void
      */
     function replaceHeaderData()
@@ -80,13 +80,8 @@ class ux_ux_tslib_fe extends ux_tslib_fe
         }
 
         foreach ($this->additionalHeaderData as $strKey => $strContent) {
-            $this->additionalHeaderData[$strKey] 
+            $this->additionalHeaderData[$strKey]
                 = Netresearch_Cdn::addCdnPrefix($strContent);
         }
     }
-}
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_fe.php'])    {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_fe.php']);
 }
