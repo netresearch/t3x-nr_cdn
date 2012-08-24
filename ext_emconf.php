@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "nr_cdn".
 #
-# Auto generated 29-05-2012 15:33
+# Auto generated 24-08-2012 09:57
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -18,11 +18,10 @@ $EM_CONF[$_EXTKEY] = array(
 	'author_company' => 'Netresearch GmbH & Co.KG',
 	'author_email' => 'alexander.opitz@netresearch.de',
 	'shy' => '',
-	'dependencies' => 'aida_autoloader,aida_common',
+	'dependencies' => 'aida_common',
 	'constraints' => array(
 		'depends' => array(
 			'typo3' => '4.2.1-0.0.0',
-			'aida_autoloader' => '1.4.0-',
 			'aida_common' => '0.0.1-',
 		),
 		'conflicts' => array(
@@ -41,7 +40,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'version' => '0.12.0',
-	'_md5_values_when_last_written' => 'a:16:{s:9:"ChangeLog";s:4:"6e85";s:10:"README.rst";s:4:"70c5";s:9:"build.xml";s:4:"c0f9";s:32:"class.user_t3libpagerenderer.php";s:4:"a363";s:26:"class.ux_tslib_content.php";s:4:"6c23";s:21:"class.ux_tslib_fe.php";s:4:"8d54";s:12:"ext_icon.gif";s:4:"a459";s:17:"ext_localconf.php";s:4:"650e";s:23:"src/Netresearch/Cdn.php";s:4:"d034";s:50:"src/Netresearch/Cdn/HookCssFilelinksGetFileUrl.php";s:4:"740d";s:26:"tests/PageRendererTest.php";s:4:"cb5e";s:23:"tests/UxContentTest.php";s:4:"7519";s:19:"tests/bootstrap.php";s:4:"d2d3";s:20:"tests/dummy-cObj.php";s:4:"e02d";s:17:"tests/phpunit.xml";s:4:"da54";s:29:"tests/Netresearch/CdnTest.php";s:4:"ed96";}',
+	'_md5_values_when_last_written' => 'a:17:{s:9:"ChangeLog";s:4:"c965";s:10:"README.rst";s:4:"70c5";s:9:"build.xml";s:4:"c0f9";s:32:"class.user_t3libpagerenderer.php";s:4:"a363";s:26:"class.ux_tslib_content.php";s:4:"6c23";s:21:"class.ux_tslib_fe.php";s:4:"c6bd";s:16:"ext_autoload.php";s:4:"cf22";s:12:"ext_icon.gif";s:4:"a459";s:17:"ext_localconf.php";s:4:"650e";s:23:"src/Netresearch/Cdn.php";s:4:"d034";s:50:"src/Netresearch/Cdn/HookCssFilelinksGetFileUrl.php";s:4:"740d";s:26:"tests/PageRendererTest.php";s:4:"cb5e";s:23:"tests/UxContentTest.php";s:4:"7519";s:19:"tests/bootstrap.php";s:4:"d2d3";s:20:"tests/dummy-cObj.php";s:4:"e02d";s:17:"tests/phpunit.xml";s:4:"da54";s:29:"tests/Netresearch/CdnTest.php";s:4:"ed96";}',
 	'suggests' => array(
 	),
 );
