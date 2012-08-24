@@ -11,18 +11,16 @@
 ########################################################################
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'NR CDN',
+	'title' => 'Netresearch Content Delivery Network Tools',
 	'description' => 'Images and Medias to Content Delivery Network',
 	'category' => 'fe',
-	'author' => 'Alexander Opitz',
+	'author' => 'Alexander Opitz, Sebastian Mendel',
 	'author_company' => 'Netresearch GmbH & Co.KG',
-	'author_email' => 'alexander.opitz@netresearch.de',
+	'author_email' => 'alexander.opitz@netresearch.de, sebastian.mendel@netresearch.de',
 	'shy' => '',
-	'dependencies' => 'aida_common',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '4.2.1-0.0.0',
-			'aida_common' => '0.0.1-',
+			'typo3' => '5.3.0-0.0.0',
 		),
 		'conflicts' => array(
 		),
@@ -32,7 +30,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'conflicts' => '',
 	'priority' => '',
 	'module' => '',
-	'state' => 'beta',
+	'state' => 'stable',
 	'internal' => '',
 	'uploadfolder' => 0,
 	'createDirs' => '',
