@@ -123,6 +123,30 @@ class Netresearch_CdnTest
         );
     }
 
+    public function testGetPathReplacmentsWithIgnoringSlash()
+    {
+        $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = true;
+        $GLOBALS['CDN_CONF_VARS']['paths'] = array(
+            'Test1' => null,
+            'Test2' => array('.abc', '.def'),
+            'Test3' => null,
+        );
+
+        $cdn = new Netresearch_Cdn();
+        $method = $this->getAccessibleMethod($cdn, 'getPathReplacements');
+
+        $arResult = $method->invoke($cdn);
+        $this->assertSame(
+            array (
+                0 => '/^\\/?(Test1\/[^?]*$)/',
+                1 => '/^\\/?(Test2\/[^?]*(.abc|.def)$)/',
+                2 => '/^\\/?(Test3\/[^?]*$)/',
+            ),
+            $arResult,
+            'The static var'
+        );
+    }
+
     public function testGetContentReplacementsStaticIfSet()
     {
         $cdn = new Netresearch_Cdn();
