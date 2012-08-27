@@ -6,14 +6,14 @@ Netresearch Content Delivery Network Tools
 What does it do
 ===============
 
-This extension will link satic media in your page to your Contetn Delivery Network
-or just any other static server for media like.
+This extension will link static media in your page to your Content Delivery Network
+or just any other static server for media delivery.
 
 http://en.wikipedia.org/wiki/Content_delivery_network
 
-So you can use your full featured CDN to deliver content to your customers faster
-and offload traffic from your CMS servers or just use some lightweight fast
-http server like lighttpd.
+So you can use your full featured CDN or just use some lightweight fast
+http server like lighttpd to deliver content to your customers faster
+and offload traffic from your CMS servers.
 
 nr_cdn will rewrite URLs to static files in served pages e. g.:
 

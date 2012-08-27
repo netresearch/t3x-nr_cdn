@@ -27,4 +27,21 @@ if (TYPO3_MODE == 'FE') {
         = 'tx_Netresearch_Cdn_HookCssFilelinksGetFileUrl';
     $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][]
         = 'EXT:nr_cdn/class.user_t3libpagerenderer.php:user_t3libpagerenderer->renderPreProcess';
+
+    /*
+    $GLOBALS['CDN_CONF_VARS'] = array(
+        // host name for CDN like cdn.example.org
+        'host' => '',
+
+        // whether to ignore leading slahes in given relacement paths
+        'ignoreslash' => true,
+
+        // paths to be replaced/prefixed with CDN host
+        'paths' => array(
+            'fileadmin' => null, // every file
+            'typo3temp' => null, // every file
+            'typo3conf' => array('.js', '.png', '.gif', '.jpg'), // only static files
+        ),
+    );
+    */
 }
