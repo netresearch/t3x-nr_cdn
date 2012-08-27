@@ -16,6 +16,73 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         unset($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']);
     }
 
+
+
+    /**
+     * @covers user_t3libpagerenderer::renderPreProcess
+     */
+    public function testRenderPreProcessDoesNothingWithoutConfiguredURL()
+    {
+
+        $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = '';
+
+        $arJsLibs = array(
+            'inFileadmin' => array('file' => 'fileadmin/bla'),
+            'inTypo3temp' => array('file' => 'other/bla'),
+            'inTypo3confRight' => array('file' => 'typo3conf/image.jpg'),
+            'inTypo3confWrong' => array('file' => 'typo3conf/ext/my_ext/ajax.php?abc=ajax.js'),
+        );
+        $arJsFiles = array(
+            'fileadmin/bla1' => array(),
+            'other/bla1' => array(),
+            'typo3conf/image.jpg' => array(),
+            'typo3conf/ext/my_ext/ajax.php?abc=ajax.js' => array(),
+        );
+        $arJsFooterFiles = array(
+            'fileadmin/bla2' => array(),
+            'other/bla2' => array(),
+            'typo3conf/image.jpg' => array(),
+            'typo3conf/ext/my_ext/ajax.php?abc=ajax.js' => array(),
+        );
+        $arCssFiles = array(
+            'fileadmin/bla3' => array(),
+            'other/bla3' => array(),
+            'typo3conf/image.jpg' => array(),
+            'typo3conf/ext/my_ext/ajax.php?abc=ajax.js' => array(),
+        );
+
+        $arJsLibsOrg = $arJsLibs;
+        $arJsFilesOrg = $arJsFiles;
+        $arJsFooterFilesOrg = $arJsFooterFiles;
+        $arCssFilesOrg = $arCssFiles;
+
+        $class = new user_t3libpagerenderer();
+        $arTest = array(
+            'jsLibs' => &$arJsLibs,
+            'jsFiles' => &$arJsFiles,
+            'jsFooterFiles' => &$arJsFooterFiles,
+            'cssFiles' => &$arCssFiles,
+        );
+
+        $class->renderPreProcess($arTest, null);
+
+        $this->assertSame(
+            array(
+                'jsLibs' => &$arJsLibsOrg,
+                'jsFiles' => &$arJsFilesOrg,
+                'jsFooterFiles' => &$arJsFooterFilesOrg,
+                'cssFiles' => &$arCssFilesOrg,
+            ),
+            $arTest,
+            'Files array must not be altered.'
+        );
+    }
+
+
+
+    /**
+     * @covers user_t3libpagerenderer::renderPreProcess
+     */
     public function testRenderPreProcess()
     {
         $GLOBALS['CDN_CONF_VARS']['paths'] = array(
