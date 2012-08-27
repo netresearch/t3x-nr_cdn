@@ -141,7 +141,7 @@ class Netresearch_Cdn
      * Returns whether a leading slash should be ignored when finding paths
      * to be served from CDN.
      *
-     * Determines if '/fileadmin/' is prefixed exactly as 'fileadmin/' with CDN
+     * Determines if relative pathes should also be prefixed with CDN URL.
      *
      * @return boolean
      */
@@ -155,11 +155,11 @@ class Netresearch_Cdn
 
 
     /**
-     * Adds the CDN path in front of the string, if it starts with fileadmin.
+     * Adds the CDN path in front of the string, if it starts with a configured paths.
      *
-     * @param string $strFileName Name for a file to add cdn path
+     * @param string $strFileName Filename to be prefixed with CDN path.
      *
-     * @return string The file path with added cdn url, if file is in "fileadmin/"
+     * @return string The file path with added CDN URL, if file is inside configured paths.
      */
     public static function addHost($strFileName)
     {
@@ -178,9 +178,7 @@ class Netresearch_Cdn
     /**
      * Prefix URLs in content with CDN path.
      *
-     * URLs are identified by '"fileadmin'.
-     *
-     * @param string $strContent content where to replace URls with CDN path
+     * @param string $strContent content where to replace URls with CDN path.
      *
      * @return string
      */
