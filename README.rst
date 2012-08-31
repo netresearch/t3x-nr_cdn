@@ -29,14 +29,41 @@ Constants
 ::
 
     CDNURL = //cdn.domain.tld
+    CDN_ignoreslash = 1
 
 Setup
 -----
 
 ::
 
-    config.nr_cdn.URL = {$CDNURL}
+    # CDN URL prefix/host
+    URL = {$CDNURL}
 
+    # whether to ignore leading slahes in given relacement paths
+    ignoreslash = {$CDN_ignoreslash}
+
+    1 {
+        # paths to be replaced/prefixed with CDN host
+        path = fileadmin
+    }
+    2 {
+        # paths to be replaced/prefixed with CDN host
+        path = typo3temp
+    }
+    3 {
+        # paths to be replaced/prefixed with CDN host
+        path = typo3conf
+        ext {
+            # file extension to be replaced with CDN host
+            10 = .js
+            # file extension to be replaced with CDN host
+            20 = .png
+            # file extension to be replaced with CDN host
+            30 = .gif
+            # file extension to be replaced with CDN host
+            40 = .jpg
+        }
+    }
 Note
 ----
 

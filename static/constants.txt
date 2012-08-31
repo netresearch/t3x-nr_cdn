@@ -1,1 +1,5 @@
+# cat=NR CDN/enable/010; type=string; label=CDN HOST: CDN Host to be prefixed for static content
 CDNURL =
+
+# cat=NR CDN/enable/020; type=boolean; label=Ignor leading slash: If enabled all URL will be prefixed with CDN, if disabled only reltaive URLs will be prefixed with CDN
+CDN_ignoreslash = 1
