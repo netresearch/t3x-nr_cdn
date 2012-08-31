@@ -49,22 +49,64 @@ class Netresearch_Cdn
      */
     protected function getPaths()
     {
-        if (null !== static::$arPaths) {
-            return static::$arPaths;
-        }
-
-        if (empty($GLOBALS['CDN_CONF_VARS']['paths'])) {
-            static::$arPaths = array('fileadmin/' => null);
-            return static::$arPaths;
-        }
-
-        static::$arPaths = array();
-
-        foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath => $arFileExtensions) {
-            static::$arPaths[$strPath  . '/'] = $arFileExtensions;
+        if (null === static::$arPaths) {
+            static::$arPaths = array_merge(
+                static::getPathsFromPhpConfig(),
+                static::getPathsTypoScriptConfig()
+            );
         }
 
         return static::$arPaths;
+    }
+
+
+
+    /**
+     * Returns paths confgiured by TypoScript to be served from CDN.
+     *
+     * @return array
+     */
+    protected function getPathsTypoScriptConfig()
+    {
+        $arCfg = static::getConfig();
+
+        $arPaths = array();
+
+        if (empty($arCfg['paths']) || ! is_array($arCfg['paths'])) {
+            return $arPaths;
+        }
+
+        foreach ($arCfg['paths'] as $arPath) {
+            $arPaths[$arPath['path'] . '/'] = null;
+            if (isset($arPath['ext']) && is_array($arPath['ext'])) {
+                $arPaths[$arPath['path'] . '/'] = implode(',', $arPath['ext']);
+            }
+        }
+
+        return $arPaths;
+    }
+
+
+
+    /**
+     * Returns paths configured in PHP to be served from CDN.
+     *
+     * @return array
+     */
+    protected function getPathsFromPhpConfig()
+    {
+        if (empty($GLOBALS['CDN_CONF_VARS']['paths'])) {
+            $arPaths = array('fileadmin/' => null);
+            return $arPaths;
+        }
+
+        $arPaths = array();
+
+        foreach ($GLOBALS['CDN_CONF_VARS']['paths'] as $strPath => $arFileExtensions) {
+            $arPaths[$strPath  . '/'] = $arFileExtensions;
+        }
+
+        return $arPaths;
     }
 
 
@@ -147,9 +189,20 @@ class Netresearch_Cdn
      */
     protected static function ignoreSlash()
     {
-        return false === empty(
-            $GLOBALS['CDN_CONF_VARS']['ignoreslash']
-        );
+        static $bIgnoreSlash = null;
+
+        if (null === $bIgnoreSlash) {
+            if (false === empty($GLOBALS['CDN_CONF_VARS']['ignoreslash'])) {
+                $bIgnoreSlash = true;
+            }
+
+            $arCfg = static::getConfig();
+            if (isset($arCfg['ignoreslash'])) {
+                $bIgnoreSlash = (bool) $arCfg['ignoreslash'];
+            }
+        }
+
+        return $bIgnoreSlash;
     }
 
 
@@ -163,11 +216,12 @@ class Netresearch_Cdn
      */
     public static function addHost($strFileName)
     {
-        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
+        $strUrl = static::getCdnUrl();
+
+        if (empty($strUrl)) {
             return $strFileName;
         }
 
-        $strUrl = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
         return preg_replace(
             static::getPathReplacements(), $strUrl . '\\1', $strFileName
         );
@@ -184,16 +238,15 @@ class Netresearch_Cdn
      */
     public static function addCdnPrefix($strContent)
     {
-        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
+        $strUrl = static::getCdnUrl();
+
+        if (empty($strUrl)) {
             return $strContent;
         }
 
-        $strUrl = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
-        $strContent = preg_replace(
+        return preg_replace(
             static::getContentReplacements(), '"' . $strUrl . '\\1', $strContent
         );
-
-        return $strContent;
     }
 
 
@@ -213,16 +266,40 @@ class Netresearch_Cdn
             return false;
         }
 
-        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
+        $strUrl = static::getCdnUrl();
+
+        if (empty($strUrl)) {
             return false;
         }
 
         $restore = $GLOBALS['TSFE']->absRefPrefix;
 
-        static::setAbsRefPrefix(
-            $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']
-        );
+        static::setAbsRefPrefix($strUrl);
 
         return $restore;
+    }
+
+
+
+    /**
+     * Returns confgiured CDN URL.
+     *
+     * @return string
+     */
+    public function getCdnUrl()
+    {
+        return $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
+    }
+
+
+
+    /**
+     * Returns config array.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
     }
 }
