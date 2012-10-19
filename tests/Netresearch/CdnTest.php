@@ -178,9 +178,9 @@ class Netresearch_CdnTest
         $arResult = $method->invoke($cdn);
         $this->assertSame(
             array (
-                0 => '/\"(Test1\/[^?"]*\")/',
-                1 => '/\"(Test2\/[^?"]*(\.abc|\.def)\")/',
-                2 => '/\"(Test3\/[^?"]*\")/',
+                0 => '/\"\/?(Test1\/[^?"]*\")/',
+                1 => '/\"\/?(Test2\/[^?"]*(\.abc|\.def)\")/',
+                2 => '/\"\/?(Test3\/[^?"]*\")/',
             ),
             $arResult,
             'The static var'
