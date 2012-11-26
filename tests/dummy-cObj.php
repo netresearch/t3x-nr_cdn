@@ -1,4 +1,7 @@
 <?php
+/**
+ * @ignore
+ */
 class  tslib_cObj
 {
     var $__USER = null;
@@ -29,5 +32,3 @@ class  tslib_cObj
 
     }
 }
-
-?>
