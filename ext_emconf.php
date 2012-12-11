@@ -1,14 +1,14 @@
 <?php
 
-########################################################################
-# Extension Manager/Repository config file for ext "nr_cdn".
-#
-# Auto generated 04-10-2012 18:24
-#
-# Manual updates:
-# Only the data in the array - everything else is removed by next
-# writing. "version" and "dependencies" must not be touched!
-########################################################################
+/***************************************************************
+ * Extension Manager/Repository config file for ext "nr_cdn".
+ *
+ * Auto generated 11-12-2012 13:21
+ *
+ * Manual updates:
+ * Only the data in the array - everything else is removed by next
+ * writing. "version" and "dependencies" must not be touched!
+ ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Netresearch Content Delivery Network Tools',
@@ -38,8 +38,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'version' => '0.14.0',
-	'_md5_values_when_last_written' => 'a:20:{s:9:"ChangeLog";s:4:"918e";s:10:"README.rst";s:4:"0bbf";s:9:"build.xml";s:4:"c0f9";s:32:"class.user_t3libpagerenderer.php";s:4:"5949";s:26:"class.ux_tslib_content.php";s:4:"b82a";s:21:"class.ux_tslib_fe.php";s:4:"7d21";s:16:"ext_autoload.php";s:4:"696f";s:12:"ext_icon.gif";s:4:"a459";s:17:"ext_localconf.php";s:4:"40e5";s:14:"ext_tables.php";s:4:"ce5f";s:23:"src/Netresearch/Cdn.php";s:4:"45be";s:50:"src/Netresearch/Cdn/HookCssFilelinksGetFileUrl.php";s:4:"dd33";s:20:"static/constants.txt";s:4:"9c4c";s:16:"static/setup.txt";s:4:"bf36";s:26:"tests/PageRendererTest.php";s:4:"6b85";s:23:"tests/UxContentTest.php";s:4:"7519";s:19:"tests/bootstrap.php";s:4:"d2d3";s:20:"tests/dummy-cObj.php";s:4:"e02d";s:17:"tests/phpunit.xml";s:4:"c1d6";s:29:"tests/Netresearch/CdnTest.php";s:4:"64c7";}',
+	'version' => '0.15.0',
+	'_md5_values_when_last_written' => 'a:20:{s:9:"build.xml";s:4:"c0f9";s:9:"ChangeLog";s:4:"d8f6";s:32:"class.user_t3libpagerenderer.php";s:4:"5949";s:26:"class.ux_tslib_content.php";s:4:"b82a";s:21:"class.ux_tslib_fe.php";s:4:"9e7f";s:16:"ext_autoload.php";s:4:"696f";s:12:"ext_icon.gif";s:4:"a459";s:17:"ext_localconf.php";s:4:"40e5";s:14:"ext_tables.php";s:4:"ce5f";s:10:"README.rst";s:4:"0bbf";s:23:"src/Netresearch/Cdn.php";s:4:"45be";s:50:"src/Netresearch/Cdn/HookCssFilelinksGetFileUrl.php";s:4:"dd33";s:20:"static/constants.txt";s:4:"9c4c";s:16:"static/setup.txt";s:4:"bf36";s:19:"tests/bootstrap.php";s:4:"d2d3";s:20:"tests/dummy-cObj.php";s:4:"da35";s:26:"tests/PageRendererTest.php";s:4:"6b85";s:17:"tests/phpunit.xml";s:4:"c1d6";s:23:"tests/UxContentTest.php";s:4:"7519";s:29:"tests/Netresearch/CdnTest.php";s:4:"5492";}',
 	'suggests' => array(
 	),
 );
