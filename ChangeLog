@@ -1,5 +1,9 @@
 2013-03-01  Sebastian Mendel  <sebastian.mendel@netresearch.de>
 
+	* Version: 1.0.0
+
+2013-03-01  Sebastian Mendel  <sebastian.mendel@netresearch.de>
+
 	* Prefix all image path for cImage with CDN Host -  not only  the ones from fileadmin/
 
 2012-12-11  Sebastian Mendel  <sebastian.mendel@netresearch.de>
