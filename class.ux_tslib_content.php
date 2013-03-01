@@ -104,18 +104,11 @@ class ux_tslib_cObj extends tslib_cObj
      */
     function cImage($file, $conf)
     {
-        $info = $this->getImgResource($file, $conf['file.']);
-        $bNeedAbsRefPrefix = ('fileadmin/' === substr($info[3], 0, 10));
-
-        if ($bNeedAbsRefPrefix) {
-            $restore = Netresearch_Cdn::setAbsRefPrefix();
-        }
+        $restore = Netresearch_Cdn::setAbsRefPrefix();
 
         $content = parent::cImage($file, $conf);
 
-        if ($bNeedAbsRefPrefix) {
-            Netresearch_Cdn::setAbsRefPrefix($restore);
-        }
+        Netresearch_Cdn::setAbsRefPrefix($restore);
 
         return $content;
     }
