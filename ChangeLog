@@ -92,7 +92,6 @@
 
 	* Version: 0.9.5
 
-
 2010-04-21  Alexander Opitz  <alexander.opitz@netresearch.de>
 
 	* SDM-5771: cssstyledcontent connector
@@ -113,10 +112,10 @@
 
 2010-03-17  Alexander Opitz  <alexander.opitz@netresearch.de>
 
-	* : Fix XClass Name
+	* Fix XClass Name
 
 	* Version: 0.9.1
 
 2010-01-25  Alexander Opitz  <alexander.opitz@netresearch.de>
 
-	* : Release NR CDN for Typo3 4.2.1
+	* Release NR CDN for TYPO3 4.2.1
