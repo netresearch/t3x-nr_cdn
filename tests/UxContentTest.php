@@ -233,16 +233,13 @@ class UxContentTest extends Netresearch_Unittest_TestCase
             'ux_tslib_cObj',
             array('getImgResource')
         );
-        $info[3] = 'fileadmin/';
-        $ucx->expects($this->once())
-            ->method('getImgResource')
-            ->will($this->returnValue($info));
 
         $ucx->cImage('', array());
         $testUrlBefore = $ucx->testUrlBefore;
         $this->assertSame(
-            'ext', $testUrlBefore,
-            'absRefPrefix must be altered to CDN URL'
+            $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'],
+            $testUrlBefore,
+            'absRefPrefix must have same value as $GLOBALS[\'TSFE\']->tmpl->setup[\'config.\'][\'nr_cdn.\'][\'URL\']'
         );
         $this->assertSame(
             'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
@@ -255,23 +252,26 @@ class UxContentTest extends Netresearch_Unittest_TestCase
      */
     public function testCImageNoUrlForTheCDN()
     {
+        // prepare test
         $GLOBALS['TSFE']->absRefPrefix = 'UNITTEST';
         $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'] = 'ext';
+
+        // get mock
         $ucx = $this->getMock(
             'ux_tslib_cObj',
             array('getImgResource')
         );
-        $info[3] = 'typo3temp/';
-        $ucx->expects($this->once())
-            ->method('getImgResource')
-            ->will($this->returnValue($info));
 
         $ucx->cImage('', array());
         $testUrlBefore = $ucx->testUrlBefore;
+
+        // test results
         $this->assertSame(
-            'UNITTEST', $testUrlBefore,
-            'absRefPrefix must be original'
+            $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'],
+            $testUrlBefore,
+            'absRefPrefix must have same value as $GLOBALS[\'TSFE\']->tmpl->setup[\'config.\'][\'nr_cdn.\'][\'URL\']'
         );
+
         $this->assertSame(
             'UNITTEST', $GLOBALS['TSFE']->absRefPrefix,
             'absRefPrefix must have same value as before calling MULTIMEDIA()'
