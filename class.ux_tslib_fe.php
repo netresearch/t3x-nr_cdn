@@ -63,17 +63,17 @@ class ux_tslib_fe extends tslib_fe
         $GLOBALS['TT']->push('Substitute header section');
         $this->INTincScript_loadJSCode();
         $this->replaceHeaderData();
-		// substituteHeaderSection hook for possible manipulation
-		if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_substituteHeaderSection'])) {
-			$params = array(
-				'additionalHeaderData' => &$this->additionalHeaderData,
+        // substituteHeaderSection hook for possible manipulation
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_substituteHeaderSection'])) {
+            $params = array(
+                'additionalHeaderData' => &$this->additionalHeaderData,
                 'content'              => &$this->content,
-				'divSection'           => &$this->divSection
-			);
-			foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_substituteHeaderSection'] as $hook) {
-				t3lib_div::callUserFunction($hook, $params, $this);
-			}
-		}
+                'divSection'           => &$this->divSection
+            );
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_substituteHeaderSection'] as $hook) {
+                t3lib_div::callUserFunction($hook, $params, $this);
+            }
+        }
         $this->content = str_replace(
             '<!--HD_' . $this->config['INTincScript_ext']['divKey'] . '-->',
             $this->convOutputCharset(
@@ -113,3 +113,4 @@ class ux_tslib_fe extends tslib_fe
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_fe.php'])    {
     include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_fe.php']);
 }
+?>

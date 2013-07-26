@@ -1,4 +1,5 @@
 <?php
+declare(encoding = 'UTF-8');
 require_once(t3lib_extMgm::extPath('nr_cdn').'class.user_t3libpagerenderer.php');
 /**
  * Test class for nr_cdn.
@@ -217,5 +218,4 @@ class PageRendererTest extends PHPUnit_Framework_TestCase
         );
     }
 }
-
 ?>

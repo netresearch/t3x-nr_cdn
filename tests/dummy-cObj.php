@@ -1,4 +1,5 @@
 <?php
+declare(encoding = 'UTF-8');
 /**
  * @ignore
  */
@@ -32,3 +33,4 @@ class  tslib_cObj
 
     }
 }
+?>

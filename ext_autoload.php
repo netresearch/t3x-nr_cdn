@@ -29,3 +29,4 @@ return array(
     'ux_tslib_fe'
         => $strExtPath . 'class.ux_tslib_fe.php',
 );
+?>

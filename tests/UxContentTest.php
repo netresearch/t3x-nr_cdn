@@ -1,4 +1,5 @@
 <?php
+declare(encoding = 'UTF-8');
 require_once(t3lib_extMgm::extPath('nr_cdn').'class.ux_tslib_content.php');
 /**
  * Test class for nr_cdn.
@@ -298,5 +299,4 @@ class UxContentTest extends Netresearch_Unittest_TestCase
         );
     }
 }
-
 ?>

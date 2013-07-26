@@ -69,3 +69,4 @@ class user_t3libpagerenderer
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.user_t3libpagerenderer.php']) {
     include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.user_t3libpagerenderer.php']);
 }
+?>

@@ -1,4 +1,5 @@
 <?php
+declare(encoding = 'UTF-8');
 
 /**
  * Test Netresearch_Cdn
@@ -225,3 +226,4 @@ EOT;
         $this->assertSame($strExpected, $strResult);
     }
 }
+?>

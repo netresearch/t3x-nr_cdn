@@ -303,3 +303,4 @@ class Netresearch_Cdn
         return $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
     }
 }
+?>

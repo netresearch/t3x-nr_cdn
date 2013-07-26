@@ -82,3 +82,4 @@ class tx_Netresearch_Cdn_HookCssFilelinksGetFileUrl
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.user_cssstyledcontent_pi1.php'])    {
     include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.user_cssstyledcontent_pi1.php']);
 }
+?>
