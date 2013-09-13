@@ -27,6 +27,8 @@ if (TYPO3_MODE == 'FE') {
         = 'tx_Netresearch_Cdn_HookCssFilelinksGetFileUrl';
     $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][]
         = 'EXT:nr_cdn/class.user_t3libpagerenderer.php:user_t3libpagerenderer->renderPreProcess';
+    $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postProcess'][]
+        = 'EXT:nr_cdn/class.user_t3libpagerenderer.php:user_t3libpagerenderer->renderPostProcess';
 
     /*
     $GLOBALS['CDN_CONF_VARS'] = array(

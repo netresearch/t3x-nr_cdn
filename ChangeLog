@@ -1,3 +1,7 @@
+2013-09-13  Sebastian Mendel  <sebastian.mendel@netresearch.de>
+
+	* TYPO-1691: add post render filter to rewrite asset URLs to CDN
+
 2013-03-07  Sebastian Mendel  <sebastian.mendel@netresearch.de>
 
 	* Version: 1.0.1
