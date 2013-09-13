@@ -255,9 +255,9 @@ class Netresearch_Cdn
      * Set (restore) $GLOBALS['TSFE']->absRefPrefix and returns old absRefPrefix
      * or false if not changed.
      *
-     * @param string $restore absRefPrefix path to set, or false to ignore
+     * @param string|boolean $restore absRefPrefix path to set, or false to ignore
      *
-     * @return string old absRefPrefix or false if not changed
+     * @return string|boolean old absRefPrefix or false if not changed
      */
     public static function setAbsRefPrefix($restore = false)
     {
