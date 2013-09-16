@@ -26,7 +26,7 @@ declare(encoding = 'UTF-8');
 class user_t3libpagerenderer
 {
     /**
-     * Fix urls for header JS/CSS
+     * Prepend CDN host in JavaScript and CSS URLs.
      *
      * @param array              $arParams Parameter from render function
      * @param t3lib_PageRenderer $pObj     The object itself.
@@ -68,7 +68,7 @@ class user_t3libpagerenderer
 
 
     /**
-     * Fix urls for header JS/CSS
+     * Prepend CDN host to asset URLs in rendered content.
      *
      * @param array              $arParams Parameter from render function
      * @param t3lib_PageRenderer $pObj     The object itself.
