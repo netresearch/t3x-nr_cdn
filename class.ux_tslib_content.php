@@ -26,7 +26,7 @@ if (t3lib_extMgm::isLoaded('obts')) {
 }
 
 /**
- * Extends tslib_cObj for manipulating links refering to CDN host.
+ * Extends tslib_cObj for manipulating links referring to CDN host.
  *
  * @category   Netresearch
  * @package    CDN

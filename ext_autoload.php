@@ -1,7 +1,7 @@
 <?php
 declare(encoding = 'UTF-8');
 /**
- * Extension autoload configuration.
+ * Extension auto loader configuration.
  *
  * PHP version 5
  *

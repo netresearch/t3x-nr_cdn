@@ -62,7 +62,7 @@ class Netresearch_Cdn
 
 
     /**
-     * Returns paths confgiured by TypoScript to be served from CDN.
+     * Returns paths configured by TypoScript to be served from CDN.
      *
      * @return array
      */
@@ -183,7 +183,7 @@ class Netresearch_Cdn
      * Returns whether a leading slash should be ignored when finding paths
      * to be served from CDN.
      *
-     * Determines if relative pathes should also be prefixed with CDN URL.
+     * Determines if relative paths should also be prefixed with CDN URL.
      *
      * @return boolean
      */
@@ -282,7 +282,7 @@ class Netresearch_Cdn
 
 
     /**
-     * Returns confgiured CDN URL.
+     * Returns configured CDN URL.
      *
      * @return string
      */

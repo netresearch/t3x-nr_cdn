@@ -2,7 +2,7 @@ config.nr_cdn {
     # CDN URL prefix/host
     URL = {$CDNURL}
 
-    # whether to ignore leading slahes in given relacement paths
+    # whether to ignore leading slashes in given replacement paths
     ignoreslash = {$CDN_ignoreslash}
 
     paths {

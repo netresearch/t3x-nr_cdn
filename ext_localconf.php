@@ -35,7 +35,7 @@ if (TYPO3_MODE == 'FE') {
         // host name for CDN like cdn.example.org
         'host' => '',
 
-        // whether to ignore leading slahes in given relacement paths
+        // whether to ignore leading slashes in given replacement paths
         'ignoreslash' => true,
 
         // paths to be replaced/prefixed with CDN host

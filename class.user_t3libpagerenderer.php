@@ -1,7 +1,7 @@
 <?php
 declare(encoding = 'UTF-8');
 /**
- * Hook Klasse für t3lib_pagerenderer
+ * Hook class for t3lib_pagerenderer
  *
  * PHP version 5
  *

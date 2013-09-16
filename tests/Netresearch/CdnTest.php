@@ -7,6 +7,11 @@ declare(encoding = 'UTF-8');
 class Netresearch_CdnTest
     extends Netresearch_Unittest_TestCase
 {
+    /**
+     * @var array holds backup CDN config.
+     */
+    protected $arCdnConfig = array();
+
     public function setUp()
     {
         $this->arCdnConfig = $GLOBALS['CDN_CONF_VARS'];

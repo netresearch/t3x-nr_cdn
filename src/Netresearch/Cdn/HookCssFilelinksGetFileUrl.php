@@ -29,8 +29,8 @@ class Netresearch_Cdn_HookCssFilelinksGetFileUrl
      * return url from file
      *
      * @param string $url    file url
-     * @param array  $conf   typoscript configuration
-     * @param array  $record record with all informations about the file
+     * @param array  $conf   TypoScript configuration
+     * @param array  $record record with all information about the file
      *
      * @return string url
      */

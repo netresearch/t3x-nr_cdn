@@ -7,6 +7,11 @@ require_once(t3lib_extMgm::extPath('nr_cdn').'class.ux_tslib_content.php');
  */
 class UxContentTest extends Netresearch_Unittest_TestCase
 {
+    /**
+     * @var array holds backup CDN config.
+     */
+    protected $arCdnConfig = array();
+
     public function tx_dummyUserFunc()
     {
 
@@ -32,7 +37,7 @@ class UxContentTest extends Netresearch_Unittest_TestCase
         $propStatic = $this->getAccessibleProperty('Netresearch_Cdn', 'arContentReplacements');
         $propStatic->setValue($cdn, null);
 
-        $GLOBALS['CDN_CONF_VARS'] = $this->arConfig;
+        $GLOBALS['CDN_CONF_VARS'] = $this->arCdnConfig;
     }
 
 

@@ -1,7 +1,7 @@
 Netresearch Content Delivery Network Tools
 ==========================================
 
-.. contents:: Inhaltsverzeichnis
+.. contents:: Table of Contents
 
 What does it do
 ===============
@@ -12,7 +12,7 @@ or just any other static server for media delivery.
 http://en.wikipedia.org/wiki/Content_delivery_network
 
 So you can use your full featured CDN or just use some lightweight fast
-http server like lighttpd to deliver content to your customers faster
+http server like Lighttpd to deliver content to your customers faster
 and offload traffic from your CMS servers.
 
 nr_cdn will rewrite URLs to static files in served pages e. g.:
@@ -96,3 +96,4 @@ PHP Konfiguration
             'typo3conf' => array('.js', '.png', '.gif', '.jpg'), // only static files
         ),
     );
+
