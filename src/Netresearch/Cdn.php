@@ -286,7 +286,7 @@ class Netresearch_Cdn
      *
      * @return string
      */
-    public function getCdnUrl()
+    public static function getCdnUrl()
     {
         return $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'];
     }
@@ -301,6 +301,26 @@ class Netresearch_Cdn
     public function getConfig()
     {
         return $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
+    }
+
+
+
+    /**
+     * Returns true if CDN is active.
+     *
+     * Checks for configured CDN URL.
+     *
+     * @return bool
+     */
+    public static function isActive()
+    {
+        $strUrl = static::getCdnUrl();
+
+        if (empty($strUrl)) {
+            return false;
+        }
+
+        return true;
     }
 }
 ?>

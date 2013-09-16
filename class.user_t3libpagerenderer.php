@@ -36,7 +36,7 @@ class user_t3libpagerenderer
      */
     public function renderPreProcess($arParams, $pObj)
     {
-        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
+        if (! Netresearch_Cdn::isActive()) {
             return;
         }
 
@@ -78,7 +78,7 @@ class user_t3libpagerenderer
      */
     public function renderPostProcess($arParams, $pObj)
     {
-        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
+        if (! Netresearch_Cdn::isActive()) {
             return;
         }
 
