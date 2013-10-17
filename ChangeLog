@@ -1,3 +1,7 @@
+2013-10-17  Marian Pollzien  <marian.pollzien@netresearch.de>
+
+	* TYPO-1840: added the current http host to the regex for the cdn url replacement, so absolute urls are also replaced
+
 2013-09-19  Tobias Hein  <tobias.hein@netresearch.de>
 
 	* Version: 1.1.0

@@ -124,6 +124,7 @@ class Netresearch_Cdn
 
         foreach (static::getPaths() as $strPath => $arFileExtension) {
             $strPathReg = '/^';
+            $strPathReg .= '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
             if (static::ignoreSlash()) {
                 $strPathReg .= '\\/?';
             }
@@ -155,6 +156,7 @@ class Netresearch_Cdn
 
         foreach (static::getPaths() as $strPath => $arFileExtension) {
             $strPathReg = '/\\"';
+            $strPathReg .= '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
             if (static::ignoreSlash()) {
                 $strPathReg .= '\\/?';
             }
