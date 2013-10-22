@@ -118,11 +118,12 @@ class Netresearch_CdnTest
         $method = $this->getAccessibleMethod($cdn, 'getPathReplacements');
 
         $arResult = $method->invoke($cdn);
+        $host = '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
         $this->assertSame(
             array (
-                0 => '/^(Test1\/[^?]*$)/',
-                1 => '/^(Test2\/[^?]*(.abc|.def)$)/',
-                2 => '/^(Test3\/[^?]*$)/',
+                0 => '/^' . $host . '(Test1\/[^?]*$)/',
+                1 => '/^' . $host . '(Test2\/[^?]*(.abc|.def)$)/',
+                2 => '/^' . $host . '(Test3\/[^?]*$)/',
             ),
             $arResult,
             'The static var'
@@ -142,11 +143,12 @@ class Netresearch_CdnTest
         $method = $this->getAccessibleMethod($cdn, 'getPathReplacements');
 
         $arResult = $method->invoke($cdn);
+        $host = '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
         $this->assertSame(
             array (
-                0 => '/^\\/?(Test1\/[^?]*$)/',
-                1 => '/^\\/?(Test2\/[^?]*(.abc|.def)$)/',
-                2 => '/^\\/?(Test3\/[^?]*$)/',
+                0 => '/^' . $host . '\\/?(Test1\/[^?]*$)/',
+                1 => '/^' . $host . '\\/?(Test2\/[^?]*(.abc|.def)$)/',
+                2 => '/^' . $host . '\\/?(Test3\/[^?]*$)/',
             ),
             $arResult,
             'The static var'
@@ -182,11 +184,12 @@ class Netresearch_CdnTest
         $method = $this->getAccessibleMethod($cdn, 'getContentReplacements');
 
         $arResult = $method->invoke($cdn);
+        $host = '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
         $this->assertSame(
             array (
-                0 => '/\"\/?(Test1\/[^?"]*\")/',
-                1 => '/\"\/?(Test2\/[^?"]*(\.abc|\.def)\")/',
-                2 => '/\"\/?(Test3\/[^?"]*\")/',
+                0 => '/\"' . $host . '\/?(Test1\/[^?"]*\")/',
+                1 => '/\"' . $host . '\/?(Test2\/[^?"]*(\.abc|\.def)\")/',
+                2 => '/\"' . $host . '\/?(Test3\/[^?"]*\")/',
             ),
             $arResult,
             'The static var'
@@ -208,6 +211,8 @@ class Netresearch_CdnTest
         This is an path to <img src="foo/To/image.jpg">
         This is an path to <img src="/path/To/image.jpg?123">
         This is an path to <img src="/path/To/image.jpg">
+        This is an path to <img src="http://{$_SERVER['HTTP_HOST']}/path/To/image.jpg">
+        This is an path to <img src="https://{$_SERVER['HTTP_HOST']}/path/To/image.jpg">
         <script>
         var image = "path/to/script.js";
         var image = "/path/to/script.php";
@@ -218,6 +223,8 @@ EOT;
         $strExpected = <<<EOT
         This is an path to <img src="//cdn.example.org/foo/To/image.jpg">
         This is an path to <img src="/path/To/image.jpg?123">
+        This is an path to <img src="//cdn.example.org/path/To/image.jpg">
+        This is an path to <img src="//cdn.example.org/path/To/image.jpg">
         This is an path to <img src="//cdn.example.org/path/To/image.jpg">
         <script>
         var image = "//cdn.example.org/path/to/script.js";
