@@ -31,15 +31,37 @@ class Netresearch_Cdn
     static protected $arPaths = null;
 
     /**
+     * @var array configured paths to explicit ignore by the CDN rewriting
+     */
+    static protected $arIgnorePaths = null;
+
+    /**
      * @var array path replacement regex patterns, for use on URLs
      */
     static protected $arPathReplacements = null;
+
+    /**
+     * @var array path regex patterns to ignore for cdn replacement
+     */
+    static protected $arIgnorePathReplacements = null;
+
 
     /**
      * @var array path replacement regex patterns, for use in mixed HTML content
      */
     static protected $arContentReplacements = null;
 
+    /**
+     * @var array path regex patterns which should be ignored, for use in mixed HTML content
+     */
+    static protected $arIgnoreContentReplacements = null;
+
+    /**
+     * The delimiter to define paths that should be ignored for cdn rewrite
+     *
+     * @var string
+     */
+    static protected $strIgnorePathDelimiter = '###';
 
 
     /**
@@ -57,6 +79,23 @@ class Netresearch_Cdn
         }
 
         return static::$arPaths;
+    }
+
+    /**
+     * Returns configured ignore paths to be served from CDN.
+     *
+     * @return array
+     */
+    protected function getIgnorePaths()
+    {
+        if (null === static::$arIgnorePaths) {
+            static::$arIgnorePaths = array_merge(
+                static::getIgnorePathsFromPhpConfig(),
+                static::getIgnorePathsTypoScriptConfig()
+            );
+        }
+
+        return static::$arIgnorePaths;
     }
 
 
@@ -86,6 +125,31 @@ class Netresearch_Cdn
         return $arPaths;
     }
 
+    /**
+     * Returns paths to ignore configured by TypoScript to be served from CDN.
+     *
+     * @return array
+     */
+    protected function getIgnorePathsTypoScriptConfig()
+    {
+        $arCfg = static::getConfig();
+
+        $arIgnorePaths = array();
+
+        if (empty($arCfg['ignore_paths']) || ! is_array($arCfg['ignore_paths'])) {
+            return $arIgnorePaths;
+        }
+
+        foreach ($arCfg['ignore_paths'] as $arIgnorePath) {
+            $arIgnorePaths[$arIgnorePath['ignore_paths'] . '/'] = null;
+            if (isset($arIgnorePath['ext']) && is_array($arIgnorePath['ext'])) {
+                $arPaths[$arIgnorePath['ignore_paths'] . '/'] = implode(',', $arIgnorePath['ext']);
+            }
+        }
+
+        return $arIgnorePaths;
+    }
+
 
 
     /**
@@ -109,6 +173,25 @@ class Netresearch_Cdn
         return $arPaths;
     }
 
+    /**
+     * Returns paths to ignore for cdn configured in PHP to be served from CDN.
+     *
+     * @return array
+     */
+    protected function getIgnorePathsFromPhpConfig()
+    {
+        if (empty($GLOBALS['CDN_CONF_VARS']['ignore_paths'])) {
+            return array();
+        }
+
+        $arIgnorePaths = array();
+
+        foreach ($GLOBALS['CDN_CONF_VARS']['ignore_paths'] as $strIgnorePath => $arFileExtensions) {
+            $arIgnorePaths[$strIgnorePath  . '/'] = $arFileExtensions;
+        }
+
+        return $arIgnorePaths;
+    }
 
 
     /**
@@ -139,6 +222,35 @@ class Netresearch_Cdn
         }
 
         return static::$arPathReplacements;
+    }
+
+    /**
+     * Returns array with ignore patterns file URLs.
+     *
+     * @return array
+     */
+    protected function getIgnorePathReplacements()
+    {
+        if (null !== static::$arIgnorePathReplacements) {
+            return static::$arIgnorePathReplacements;
+        }
+
+        foreach (static::getIgnorePaths() as $strIgnorePath => $arFileExtension) {
+            $strPathReg = '/^';
+            if (static::ignoreSlash()) {
+                $strPathReg .= '\\/?';
+            }
+            $strPathReg .= '(';
+            $strPathReg .= preg_quote($strIgnorePath, '/');
+            $strPathReg .= '[^?]*';
+            if (null !== $arFileExtension) {
+                $strPathReg .= '(' . implode('|', $arFileExtension) . ')';
+            }
+            $strPathReg .= '$)/';
+            static::$arIgnorePathReplacements[] = $strPathReg;
+        }
+
+        return static::$arIgnorePathReplacements;
     }
 
 
@@ -182,6 +294,40 @@ class Netresearch_Cdn
 
 
     /**
+     * Returns array with replacement patterns for use in mixed HTML content.
+     *
+     * @return array
+     */
+    protected function getIgnoreContentReplacements()
+    {
+        if (null !== static::$arIgnoreContentReplacements) {
+            return static::$arIgnoreContentReplacements;
+        }
+
+        foreach (static::getIgnorePaths() as $strIgnorePath => $arFileExtension) {
+            $strPathReg = '/\\"';
+            $strPathReg .= '(';
+            $strPathReg .= preg_quote($strIgnorePath, '/');
+            $strPathReg .= '[^?"]*';
+            if (null !== $arFileExtension) {
+                array_walk(
+                    $arFileExtension,
+                    function (&$strExt) {
+                        $strExt = preg_quote($strExt, '/');
+                    }
+                );
+                $strPathReg .= '(' . implode('|', $arFileExtension) . ')';
+            }
+            $strPathReg .= '\\")/';
+            static::$arIgnoreContentReplacements[] = $strPathReg;
+        }
+
+        return static::$arIgnoreContentReplacements;
+    }
+
+
+
+    /**
      * Returns whether a leading slash should be ignored when finding paths
      * to be served from CDN.
      *
@@ -219,14 +365,47 @@ class Netresearch_Cdn
     public static function addHost($strFileName)
     {
         $strUrl = static::getCdnUrl();
-
+        $strOrigFileName = $strFileName;
         if (empty($strUrl)) {
             return $strFileName;
         }
 
-        return preg_replace(
+        $arIgnoreContentReplacements =  static::getIgnoreContentReplacements();
+        if (count($arIgnoreContentReplacements) > 0) {
+            // TYPO-1840 - Replace all Patterns which have to be ignored with ###<string>###
+            $strFileName = preg_replace(
+                $arIgnoreContentReplacements,
+                self::$strIgnorePathDelimiter
+                . '\\1'
+                . self::$strIgnorePathDelimiter,
+                $strFileName
+            );
+        }
+        $bHasIgnorePatterns = $strFileName !== $strOrigFileName;
+
+        $strFileName = preg_replace(
             static::getPathReplacements(), $strUrl . '\\1', $strFileName
         );
+        // Check if any ignore path has been found
+        if ( false === $bHasIgnorePatterns ) {
+            return $strFileName;
+        }
+
+        // TYPO-1840 - Replace all delimiter to the original form again
+        return self::removeIgnoreDelimiter($strFileName);
+    }
+
+    /**
+     * The function will replace all occurrence of $strIgnorePathDelimiter with ''
+     * in the given string
+     *
+     * @param string $strVariable the variable to replace the delimiter in
+     *
+     * @return string returns the string without the delimiter
+     */
+    protected static function removeIgnoreDelimiter($strVariable)
+    {
+        return preg_replace('/' . self::$strIgnorePathDelimiter . '/', '', $strVariable);
     }
 
 
@@ -241,14 +420,36 @@ class Netresearch_Cdn
     public static function addCdnPrefix($strContent)
     {
         $strUrl = static::getCdnUrl();
-
+        $strOrigContent = $strContent;
         if (empty($strUrl)) {
             return $strContent;
         }
 
-        return preg_replace(
+        $arIgnoreContentReplacements =  static::getIgnoreContentReplacements();
+        if (count($arIgnoreContentReplacements) > 0) {
+            // TYPO-1840 - Replace all Patterns which have to be ignored with ###<string>###
+            $strContent = preg_replace(
+                $arIgnoreContentReplacements,
+                '"'
+                .self::$strIgnorePathDelimiter
+                . '\\1'
+                . self::$strIgnorePathDelimiter,
+                $strContent
+            );
+        }
+        // Check if any ignore path has been found
+        $bHasIgnorePatterns = $strContent !== $strOrigContent;
+
+        $strContent = preg_replace(
             static::getContentReplacements(), '"' . $strUrl . '\\1', $strContent
         );
+
+        if ( false === $bHasIgnorePatterns ) {
+            return $strContent;
+        }
+
+        // TYPO-1840 - Replace all delimiter to the original form again
+        return self::removeIgnoreDelimiter($strContent);
     }
 
 

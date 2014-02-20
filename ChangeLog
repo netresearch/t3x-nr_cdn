@@ -1,3 +1,7 @@
+2014-02-20  Tobias Hein  <tobias.hein@netresearch.de>
+
+	* TYPO-1840: add ingore_path array to nr_cdn config -  now the  patters in ignore_path would be ignored for cdn replacement
+
 2013-10-17  Marian Pollzien  <marian.pollzien@netresearch.de>
 
 	* TYPO-1840: added the current http host to the regex for the cdn url replacement, so absolute urls are also replaced

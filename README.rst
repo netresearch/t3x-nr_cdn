@@ -20,6 +20,8 @@ nr_cdn will rewrite URLs to static files in served pages e. g.:
 - /fileadmin/upload/image.jpg => //cdn.example.org/fileadmin/upload/image.jpg
 - /typo3conf/ext/my_ext/res/style.css => //cdn.example.org/typo3conf/ext/my_ext/res/style.css
 
+if you want you can exclude paths from rewriting with the help of the ingore_paths option.
+
 TypoScript Configuration
 ========================
 
@@ -41,6 +43,24 @@ Setup
 
     # whether to ignore leading slahes in given relacement paths
     ignoreslash = {$CDN_ignoreslash}
+
+    ignore_paths {
+        1 {
+            # paths to be excluded from replacing/prefixed with CDN host
+            path = fileadmin/no_cdn
+        }
+        2 {
+            # paths to be excluded from replacing/prefix with CDN host
+            path = fileadmin/no_cdn
+            ext {
+                # file extension to be excluded from replacement with CDN host
+                10 = .js
+                # file extension to be excluded from replacement with CDN host
+                20 = .png
+            }
+        }
+
+    }
 
     paths {
         1 {
@@ -88,6 +108,12 @@ PHP Konfiguration
 
         // whether to ignore leading slahes in given relacement paths
         'ignoreslash' => true,
+
+        // paths to ignore for replacement/prefix with CDN host
+        'ignore_paths' => array(
+            'fileadmin/no_cdn' => null, // ignore every file in no_cdn
+            'fileadmin/no_cdn' => array('.js', '.png', '.gif', '.jpg'), // ignore only static files
+        ),
 
         // paths to be replaced/prefixed with CDN host
         'paths' => array(
