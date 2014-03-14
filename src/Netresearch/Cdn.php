@@ -207,10 +207,7 @@ class Netresearch_Cdn
 
         foreach (static::getPaths() as $strPath => $arFileExtension) {
             $strPathReg = '/^';
-            $strPathReg .= '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
-            if (static::ignoreSlash()) {
-                $strPathReg .= '\\/?';
-            }
+            $strPathReg .= '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?\\/?';
             $strPathReg .= '(';
             $strPathReg .= preg_quote($strPath, '/');
             $strPathReg .= '[^?]*';
@@ -237,9 +234,6 @@ class Netresearch_Cdn
 
         foreach (static::getIgnorePaths() as $strIgnorePath => $arFileExtension) {
             $strPathReg = '/^';
-            if (static::ignoreSlash()) {
-                $strPathReg .= '\\/?';
-            }
             $strPathReg .= '(';
             $strPathReg .= preg_quote($strIgnorePath, '/');
             $strPathReg .= '[^?]*';
@@ -268,10 +262,7 @@ class Netresearch_Cdn
 
         foreach (static::getPaths() as $strPath => $arFileExtension) {
             $strPathReg = '/\\"';
-            $strPathReg .= '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
-            if (static::ignoreSlash()) {
-                $strPathReg .= '\\/?';
-            }
+            $strPathReg .= '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?\\/?';
             $strPathReg .= '(';
             $strPathReg .= preg_quote($strPath, '/');
             $strPathReg .= '[^?"]*';
@@ -324,35 +315,6 @@ class Netresearch_Cdn
 
         return static::$arIgnoreContentReplacements;
     }
-
-
-
-    /**
-     * Returns whether a leading slash should be ignored when finding paths
-     * to be served from CDN.
-     *
-     * Determines if relative paths should also be prefixed with CDN URL.
-     *
-     * @return boolean
-     */
-    protected static function ignoreSlash()
-    {
-        static $bIgnoreSlash = null;
-
-        if (null === $bIgnoreSlash) {
-            if (false === empty($GLOBALS['CDN_CONF_VARS']['ignoreslash'])) {
-                $bIgnoreSlash = true;
-            }
-
-            $arCfg = static::getConfig();
-            if (isset($arCfg['ignoreslash'])) {
-                $bIgnoreSlash = (bool) $arCfg['ignoreslash'];
-            }
-        }
-
-        return $bIgnoreSlash;
-    }
-
 
 
     /**

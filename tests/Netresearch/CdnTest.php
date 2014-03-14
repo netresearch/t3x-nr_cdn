@@ -15,6 +15,7 @@ class Netresearch_CdnTest
     public function setUp()
     {
         $this->arCdnConfig = $GLOBALS['CDN_CONF_VARS'];
+        $this->strHostRegex = '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?\\/?';
     }
 
     public function tearDown()
@@ -64,7 +65,6 @@ class Netresearch_CdnTest
 
     public function testGetPathsFromConf()
     {
-        $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = false;
         $GLOBALS['CDN_CONF_VARS']['paths'] = array(
             'Test1' => null,
             'Test2' => array('.abc', '.def'),
@@ -107,7 +107,6 @@ class Netresearch_CdnTest
 
     public function testGetPathReplacments()
     {
-        $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = false;
         $GLOBALS['CDN_CONF_VARS']['paths'] = array(
             'Test1' => null,
             'Test2' => array('.abc', '.def'),
@@ -118,37 +117,11 @@ class Netresearch_CdnTest
         $method = $this->getAccessibleMethod($cdn, 'getPathReplacements');
 
         $arResult = $method->invoke($cdn);
-        $host = '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
         $this->assertSame(
             array (
-                0 => '/^' . $host . '(Test1\/[^?]*$)/',
-                1 => '/^' . $host . '(Test2\/[^?]*(.abc|.def)$)/',
-                2 => '/^' . $host . '(Test3\/[^?]*$)/',
-            ),
-            $arResult,
-            'The static var'
-        );
-    }
-
-    public function testGetPathReplacmentsWithIgnoringSlash()
-    {
-        $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = true;
-        $GLOBALS['CDN_CONF_VARS']['paths'] = array(
-            'Test1' => null,
-            'Test2' => array('.abc', '.def'),
-            'Test3' => null,
-        );
-
-        $cdn = new Netresearch_Cdn();
-        $method = $this->getAccessibleMethod($cdn, 'getPathReplacements');
-
-        $arResult = $method->invoke($cdn);
-        $host = '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
-        $this->assertSame(
-            array (
-                0 => '/^' . $host . '\\/?(Test1\/[^?]*$)/',
-                1 => '/^' . $host . '\\/?(Test2\/[^?]*(.abc|.def)$)/',
-                2 => '/^' . $host . '\\/?(Test3\/[^?]*$)/',
+                0 => '/^' . $this->strHostRegex . '(Test1\/[^?]*$)/',
+                1 => '/^' . $this->strHostRegex . '(Test2\/[^?]*(.abc|.def)$)/',
+                2 => '/^' . $this->strHostRegex . '(Test3\/[^?]*$)/',
             ),
             $arResult,
             'The static var'
@@ -173,7 +146,6 @@ class Netresearch_CdnTest
 
     public function testGetContentReplacements()
     {
-        $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = false;
         $GLOBALS['CDN_CONF_VARS']['paths'] = array(
             'Test1' => null,
             'Test2' => array('.abc', '.def'),
@@ -184,12 +156,11 @@ class Netresearch_CdnTest
         $method = $this->getAccessibleMethod($cdn, 'getContentReplacements');
 
         $arResult = $method->invoke($cdn);
-        $host = '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?';
         $this->assertSame(
             array (
-                0 => '/\"' . $host . '\/?(Test1\/[^?"]*\")/',
-                1 => '/\"' . $host . '\/?(Test2\/[^?"]*(\.abc|\.def)\")/',
-                2 => '/\"' . $host . '\/?(Test3\/[^?"]*\")/',
+                0 => '/\"' . $this->strHostRegex . '(Test1\/[^?"]*\")/',
+                1 => '/\"' . $this->strHostRegex . '(Test2\/[^?"]*(\.abc|\.def)\")/',
+                2 => '/\"' . $this->strHostRegex . '(Test3\/[^?"]*\")/',
             ),
             $arResult,
             'The static var'
@@ -201,7 +172,6 @@ class Netresearch_CdnTest
         $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL']
             = '//cdn.example.org/';
 
-        $GLOBALS['CDN_CONF_VARS']['ignoreslash'] = true;
         $GLOBALS['CDN_CONF_VARS']['paths'] = array(
             'path' => array('.jpg', '.js'),
             'foo'  => null,

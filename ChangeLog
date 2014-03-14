@@ -1,3 +1,7 @@
+2014-03-14  Tobias Hein  <tobias.hein@netresearch.de>
+
+	* TYPO-1840: remove unused feature ignoreslash -  do ignores  with the new ignore_paths option instead
+
 2014-02-20  Tobias Hein  <tobias.hein@netresearch.de>
 
 	* TYPO-1840: add ingore_path array to nr_cdn config -  now the  patters in ignore_path would be ignored for cdn replacement
