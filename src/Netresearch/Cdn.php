@@ -297,6 +297,7 @@ class Netresearch_Cdn
 
         foreach (static::getIgnorePaths() as $strIgnorePath => $arFileExtension) {
             $strPathReg = '/\\"';
+            $strPathReg .= '(?:(?:https?\:)?\/\/' . $_SERVER['HTTP_HOST'] . ')?\\/?';
             $strPathReg .= '(';
             $strPathReg .= preg_quote($strIgnorePath, '/');
             $strPathReg .= '[^?"]*';
