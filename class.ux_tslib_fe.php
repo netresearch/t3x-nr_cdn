@@ -14,11 +14,6 @@ declare(encoding = 'UTF-8');
  */
 
 /**
- *
- */
-require_once PATH_tslib . 'class.tslib_fe.php';
-
-/**
  * Extends tslib_fe for manipulating links referring to CDN host.
  *
  * @category   Netresearch
