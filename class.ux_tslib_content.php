@@ -9,8 +9,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Controller
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 
 /**
@@ -32,8 +32,8 @@ if (t3lib_extMgm::isLoaded('obts')) {
  * @package    CDN
  * @subpackage Controller
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 class ux_tslib_cObj extends tslib_cObj
 {
@@ -114,7 +114,4 @@ class ux_tslib_cObj extends tslib_cObj
     }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_content.php'])    {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_content.php']);
-}
 ?>

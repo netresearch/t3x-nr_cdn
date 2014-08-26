@@ -9,8 +9,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Controller
  * @author     Alexander Opitz <alexander.opitz@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 
 /**
@@ -20,8 +20,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Controller
  * @author     Alexander Opitz <alexander.opitz@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 class user_t3libpagerenderer
 {
@@ -125,8 +125,4 @@ class user_t3libpagerenderer
     }
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.user_t3libpagerenderer.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.user_t3libpagerenderer.php']);
-}
 ?>

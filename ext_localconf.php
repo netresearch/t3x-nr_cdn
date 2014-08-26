@@ -1,5 +1,4 @@
 <?php
-declare(encoding = 'UTF-8');
 /**
  * Extension config script
  *
@@ -9,8 +8,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Config
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 
 /**

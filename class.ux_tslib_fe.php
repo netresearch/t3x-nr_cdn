@@ -9,8 +9,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Controller
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 
 /**
@@ -20,8 +20,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Controller
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 class ux_tslib_fe extends tslib_fe
 {
@@ -32,6 +32,9 @@ class ux_tslib_fe extends tslib_fe
      */
     function INTincScript()
     {
+        /** @var array[] $TYPO3_CONF_VARS */
+        global $TYPO3_CONF_VARS;
+
         // Deprecated stuff:
         // @deprecated: annotation added TYPO3 4.6
         $this->additionalHeaderData
@@ -55,17 +58,16 @@ class ux_tslib_fe extends tslib_fe
             $reprocess = (count($INTiS_config) ? true : false);
         } while ($reprocess);
 
-        $GLOBALS['TT']->push('Substitute header section');
         $this->INTincScript_loadJSCode();
         $this->replaceHeaderData();
         // substituteHeaderSection hook for possible manipulation
-        if (is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_substituteHeaderSection'])) {
+        if (is_array($TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_substituteHeaderSection'])) {
             $params = array(
                 'additionalHeaderData' => &$this->additionalHeaderData,
                 'content'              => &$this->content,
                 'divSection'           => &$this->divSection
             );
-            foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_substituteHeaderSection'] as $hook) {
+            foreach ($TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_fe.php']['hook_substituteHeaderSection'] as $hook) {
                 t3lib_div::callUserFunction($hook, $params, $this);
             }
         }
@@ -82,7 +84,6 @@ class ux_tslib_fe extends tslib_fe
             $this->content
         );
         $this->setAbsRefPrefix();
-        $GLOBALS['TT']->pull();
     }
 
 
@@ -94,7 +95,10 @@ class ux_tslib_fe extends tslib_fe
      */
     function replaceHeaderData()
     {
-        if (empty($GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.']['URL'])) {
+        /** @var tslib_fe $TSFE */
+        global $TSFE;
+
+        if (empty($TSFE->tmpl->setup['config.']['nr_cdn.']['URL'])) {
             return;
         }
 
@@ -105,7 +109,4 @@ class ux_tslib_fe extends tslib_fe
     }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_fe.php'])    {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.ux_tslib_fe.php']);
-}
 ?>

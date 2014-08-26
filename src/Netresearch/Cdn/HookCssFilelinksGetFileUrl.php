@@ -9,8 +9,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Hook
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 
 /**
@@ -20,8 +20,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Hook
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 class Netresearch_Cdn_HookCssFilelinksGetFileUrl
 {
@@ -36,19 +36,22 @@ class Netresearch_Cdn_HookCssFilelinksGetFileUrl
      */
     function getFileUrl($url, array $conf, array $record)
     {
-        $arConfig = $GLOBALS['TSFE']->tmpl->setup['config.']['nr_cdn.'];
+        /** @var tslib_fe $TSFE */
+        global $TSFE;
 
-        $initP  = '?id=' . $GLOBALS['TSFE']->id . '&type=' . $GLOBALS['TSFE']->type;
+        $arConfig = $TSFE->tmpl->setup['config.']['nr_cdn.'];
+
+        $initP  = '?id=' . $TSFE->id . '&type=' . $TSFE->type;
         if (@is_file($url)) {
             $urlEnc = str_replace('%2F', '/', rawurlencode($url));
             $locDataAdd = $conf['jumpurl.']['secure']
                 ? $this->cObj->locDataJU($urlEnc, $conf['jumpurl.']['secure.'])
                 : '';
             $retUrl = ($conf['jumpurl'])
-                ? $GLOBALS['TSFE']->config['mainScript'] . $initP . '&jumpurl='
+                ? $TSFE->config['mainScript'] . $initP . '&jumpurl='
                     . rawurlencode($urlEnc)
-                    . $locDataAdd . $GLOBALS['TSFE']->getMethodUrlIdToken
-                : $urlEnc;// && $GLOBALS['TSFE']->config['config']['jumpurl_enable']
+                    . $locDataAdd . $TSFE->getMethodUrlIdToken
+                : $urlEnc;// && $TSFE->config['config']['jumpurl_enable']
             if (is_array($arConfig) && isset($arConfig['URL'])) {
                 $retUrl = str_replace(
                     'fileadmin/',
@@ -56,12 +59,14 @@ class Netresearch_Cdn_HookCssFilelinksGetFileUrl
                     $retUrl
                 );
             }
-            return htmlspecialchars($GLOBALS['TSFE']->absRefPrefix . $retUrl);
+            return htmlspecialchars($TSFE->absRefPrefix . $retUrl);
         };
 
         return '';
     }
 }
+
+
 
 /**
  * Dummy class for TYPO3.
@@ -79,7 +84,4 @@ class tx_Netresearch_Cdn_HookCssFilelinksGetFileUrl
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.user_cssstyledcontent_pi1.php'])    {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/nr_cdn/class.user_cssstyledcontent_pi1.php']);
-}
 ?>

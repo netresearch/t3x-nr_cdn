@@ -9,8 +9,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Configuration
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 
 $strExtPath = t3lib_extMgm::extPath('nr_cdn');

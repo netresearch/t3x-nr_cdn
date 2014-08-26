@@ -9,8 +9,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Helper
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 
 /**
@@ -20,8 +20,8 @@ declare(encoding = 'UTF-8');
  * @package    CDN
  * @subpackage Helper
  * @author     Sebastian Mendel <sebastian.mendel@netresearch.de>
- * @license    http://www.netresearch.de Netresearch
- * @link       http://www.netresearch.de
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
+ * @link       http://www.netresearch.de/
  */
 class Netresearch_Cdn
 {
@@ -45,7 +45,6 @@ class Netresearch_Cdn
      */
     static protected $arIgnorePathReplacements = null;
 
-
     /**
      * @var array path replacement regex patterns, for use in mixed HTML content
      */
@@ -64,6 +63,7 @@ class Netresearch_Cdn
     static protected $strIgnorePathDelimiter = '###';
 
 
+
     /**
      * Returns configured paths to be served from CDN.
      *
@@ -80,6 +80,8 @@ class Netresearch_Cdn
 
         return static::$arPaths;
     }
+
+
 
     /**
      * Returns configured ignore paths to be served from CDN.
@@ -124,6 +126,8 @@ class Netresearch_Cdn
 
         return $arPaths;
     }
+
+
 
     /**
      * Returns paths to ignore configured by TypoScript to be served from CDN.
@@ -173,6 +177,8 @@ class Netresearch_Cdn
         return $arPaths;
     }
 
+
+
     /**
      * Returns paths to ignore for cdn configured in PHP to be served from CDN.
      *
@@ -192,6 +198,7 @@ class Netresearch_Cdn
 
         return $arIgnorePaths;
     }
+
 
 
     /**
@@ -220,6 +227,8 @@ class Netresearch_Cdn
 
         return static::$arPathReplacements;
     }
+
+
 
     /**
      * Returns array with ignore patterns file URLs.
@@ -318,6 +327,7 @@ class Netresearch_Cdn
     }
 
 
+
     /**
      * Adds the CDN path in front of the string, if it starts with a configured paths.
      *
@@ -357,6 +367,8 @@ class Netresearch_Cdn
         // TYPO-1840 - Replace all delimiter to the original form again
         return self::removeIgnoreDelimiter($strFileName);
     }
+
+
 
     /**
      * The function will replace all occurrence of $strIgnorePathDelimiter with ''
@@ -427,8 +439,11 @@ class Netresearch_Cdn
      */
     public static function setAbsRefPrefix($restore = false)
     {
+        /** @var tslib_fe $TSFE */
+        global $TSFE;
+
         if (false !== $restore) {
-            $GLOBALS['TSFE']->absRefPrefix = $restore;
+            $TSFE->absRefPrefix = $restore;
             return false;
         }
 
@@ -438,7 +453,7 @@ class Netresearch_Cdn
             return false;
         }
 
-        $restore = $GLOBALS['TSFE']->absRefPrefix;
+        $restore = $TSFE->absRefPrefix;
 
         static::setAbsRefPrefix($strUrl);
 
