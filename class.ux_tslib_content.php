@@ -14,11 +14,6 @@ declare(encoding = 'UTF-8');
  */
 
 /**
- * Includes this classes since it is used for parsing HTML
- */
-require_once PATH_t3lib . 'class.t3lib_parsehtml.php';
-
-/**
  * Object TypoScript library included:
  */
 if (t3lib_extMgm::isLoaded('obts')) {
