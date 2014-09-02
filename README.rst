@@ -1,7 +1,7 @@
 .. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
+.. -*- coding: utf-8 -*- without BOM.
 
 .. ==================================================
 .. DEFINE SOME TEXT ROLES
@@ -10,7 +10,7 @@
 .. role::   typoscript(code)
 
 .. role::   ts(typoscript)
-:class:  typoscript
+    :class:  typoscript
 
 .. role::   php(code)
 
@@ -18,7 +18,7 @@
 
 .. _start:
 
-===========================================
+==========================================
 Netresearch Content Delivery Network Tools
 ==========================================
 
@@ -28,7 +28,7 @@ Netresearch Content Delivery Network Tools
         nr_cdn
 
     :Version:
-        |release|
+        2.0.2
 
     :Language:
         en
@@ -90,7 +90,7 @@ TypoScript Configuration
 Constants
 ---------
 
-::
+.. code-block:: typoscript
 
     CDNURL = //cdn.domain.tld
     CDN_ignoreslash = 1
@@ -157,7 +157,8 @@ Don't forget to clear the cache afterwards.
 What won't go to your CDN:
 
 - thumbnails, cause this will be generated through TYPO3s thump.php
-- class files, so you shouldn't have problems with java/website interactions caused by XSS
+- class files, so you shouldn't have problems with java/website interactions
+  caused by XSS
 
 PHP Configuration
 =================
@@ -173,15 +174,18 @@ PHP Configuration
 
         // paths to ignore for replacement/prefix with CDN host
         'ignore_paths' => array(
-            'fileadmin/no_cdn' => null, // ignore every file in no_cdn
-            'fileadmin/no_cdn' => array('.js', '.png', '.gif', '.jpg'), // ignore only static files
+            // ignore every file in no_cdn
+            'fileadmin/no_cdn' => null,
+            // ignore only static files
+            'fileadmin/not_all_cdn' => array('.js', '.png', '.gif', '.jpg'),
         ),
 
         // paths to be replaced/prefixed with CDN host
         'paths' => array(
             'fileadmin' => null, // every file
             'typo3temp' => null, // every file
-            'typo3conf' => array('.js', '.png', '.gif', '.jpg'), // only static files
+            // only static files
+            'typo3conf' => array('.js', '.png', '.gif', '.jpg'),
         ),
     );
 
